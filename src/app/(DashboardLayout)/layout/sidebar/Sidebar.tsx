@@ -35,7 +35,9 @@ const Sidebar = ({
           variant="permanent"
           PaperProps={{
             sx: {
+              backgroundColor: "#191C28",
               width: sidebarWidth,
+              color: "white",
               boxSizing: "border-box",
               border: "0",
               boxShadow: "rgba(113, 122, 131, 0.11) 0px 7px 30px 0px",
@@ -54,7 +56,13 @@ const Sidebar = ({
             {/* ------------------------------------------- */}
             {/* Logo */}
             {/* ------------------------------------------- */}
-            <Box px={2}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+              p={4}
+            >
               <Logo />
             </Box>
             <Box>

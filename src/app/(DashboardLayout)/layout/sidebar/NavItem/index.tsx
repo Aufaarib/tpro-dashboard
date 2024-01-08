@@ -19,6 +19,7 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import { useAppContext } from "@/app/(DashboardLayout)/components/shared/Context";
+import { useRouter } from "next/navigation";
 
 type NavGroup = {
   [x: string]: any;
@@ -51,6 +52,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
   const theme = useTheme();
   const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
   const [open, setOpen] = React.useState(true);
+  const router = useRouter();
 
   const handleClick = () => {
     setOpen(!open);
@@ -58,21 +60,20 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
 
   const ListItemStyled = styled(ListItemButton)(() => ({
     display: "flex",
-    flexDirection: "column",
-    ".MuiButtonBase-root": {
-      backgroundColor: level > 1 ? "transparent !important" : "inherit",
-      color: theme.palette.text.secondary,
+    marginBottom: "8px",
+    marginLeft: "40px",
+    padding: "8px 10px",
+    borderRadius: "9px",
+    color: "white",
+    paddingLeft: "10px",
+    "&:hover": {
+      backgroundColor: "black",
+    },
+    "&.Mui-selected": {
+      color: "black",
+      backgroundColor: "white",
       "&:hover": {
-        backgroundColor: theme.palette.primary.light,
-        color: theme.palette.primary.main,
-      },
-      "&.Mui-selected": {
-        color: "white",
-        backgroundColor: theme.palette.primary.main,
-        "&:hover": {
-          backgroundColor: theme.palette.primary.main,
-          color: "white",
-        },
+        backgroundColor: "white",
       },
     },
   }));
@@ -89,6 +90,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
+              color: "white",
               // justifyContent: "center" ,
               // backgroundColor: "gray",
               marginBottom: "5px",
@@ -98,7 +100,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
               sx={{
                 minWidth: "36px",
                 // p: "3px 0",
-                color: "inherit",
+                color: "white",
               }}
             >
               {itemIcon}
@@ -107,29 +109,41 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
               <>{item.title}</>
             </ListItemText>
             <Button onClick={handleClick}>
-              {open ? <IconChevronUp /> : <IconChevronDown />}
+              {open ? (
+                <IconChevronUp color="white" />
+              ) : (
+                <IconChevronDown color="white" />
+              )}
             </Button>
           </List>
           <Collapse in={open} timeout="auto" unmountOnExit>
             {/* <List sx={{ pt: 0 }}> */}
             {/* <ListSubMenuStyled> */}
-            {/* <ListItemStyled> */}
             {item.submenu.map((t: any) => (
               <ListItemButton
-                style={{
+                key={t.id}
+                href={t.href}
+                selected={pathDirect === t.href}
+                onClick={onClick}
+                sx={{
                   display: "flex",
                   marginBottom: "8px",
                   marginLeft: "40px",
                   padding: "8px 10px",
                   borderRadius: "9px",
-                  color: theme.palette.text.secondary,
+                  color: "white",
                   paddingLeft: "10px",
+                  "&:hover": {
+                    backgroundColor: "black",
+                  },
+                  "&.Mui-selected": {
+                    color: "black",
+                    backgroundColor: "white",
+                    "&:hover": {
+                      backgroundColor: "white",
+                    },
+                  },
                 }}
-                component={Link}
-                key={t.id}
-                href={t.href}
-                selected={pathDirect === t.href}
-                onClick={onClick}
               >
                 <ListItemIcon
                   sx={{
@@ -143,42 +157,54 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
                 <ListItemText primary={t.name} />
                 {t.isUnapproved ? (
                   <ListItemText>
-                    <IconCircle color="red" fill="red" size={20} />
+                    <IconCircle color="red" fill="red" size={10} />
                   </ListItemText>
                 ) : (
                   ""
                 )}
               </ListItemButton>
             ))}
-            {/* </ListItemStyled> */}
-            {/* </ListSubMenuStyled> */}
-            {/* </List> */}
           </Collapse>
         </>
       ) : (
-        <ListItemStyled>
-          <ListItemButton
-            component={Link}
-            href={item.href}
-            disabled={item.disabled}
-            selected={pathDirect === item.href}
-            target={item.external ? "_blank" : ""}
-            onClick={onClick}
+        // <ListItemStyled>
+        <ListItemButton
+          key={item.id}
+          selected={pathDirect === item.href}
+          onClick={onClick}
+          sx={{
+            display: "flex",
+            marginBottom: "8px",
+            marginLeft: "40px",
+            padding: "8px 10px",
+            borderRadius: "9px",
+            color: "white",
+            paddingLeft: "10px",
+            "&:hover": {
+              backgroundColor: "black",
+            },
+            "&.Mui-selected": {
+              color: "black",
+              backgroundColor: "white",
+              "&:hover": {
+                backgroundColor: "white",
+              },
+            },
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: "36px",
+              p: "3px 0",
+              color: "inherit",
+            }}
           >
-            <ListItemIcon
-              sx={{
-                minWidth: "36px",
-                p: "3px 0",
-                color: "inherit",
-              }}
-            >
-              {itemIcon}
-            </ListItemIcon>
-            <ListItemText>
-              <>{item.title}</>
-            </ListItemText>
-          </ListItemButton>
-        </ListItemStyled>
+            {itemIcon}
+          </ListItemIcon>
+          <ListItemText>
+            <>{item.title}</>
+          </ListItemText>
+        </ListItemButton>
       )}
     </List>
   );
