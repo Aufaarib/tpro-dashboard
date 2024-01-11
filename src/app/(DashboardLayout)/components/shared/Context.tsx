@@ -83,18 +83,20 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       .catch((error) => {});
     //----------------------------------------------------------------------------
 
-    // Get Detonator
+    // Get Merchant
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/detonator/filter", {
-        headers: { authorization: `Bearer ${localStorage.getItem("TOKEN")}` },
+      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
+        },
       })
       .then((res) => {
-        setDetonatorData(res.data.body);
-        const isRejectedPresent: boolean = res.data.body.some(
-          (obj: any) => obj.status === "rejected" || obj.status === "waiting"
-        );
-        // console.log(isRejectedPresent);
-        setIsUnapprovedDetonator(isRejectedPresent);
+        setMerchantdata(res.data.body);
+        // const isRejectedPresent: boolean = res.data.body.some(
+        //   (obj: any) => obj.status === "rejected" || obj.status === "waiting"
+        // );
+        // // console.log(isRejectedPresent);
+        // setIsUnapprovedDetonator(isRejectedPresent);
       })
       .catch((error) => {});
     //----------------------------------------------------------------------------
@@ -117,16 +119,18 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     // Get Product
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/merchant-product/filter", {
-        headers: { authorization: `Bearer ${localStorage.getItem("TOKEN")}` },
+      .get(process.env.NEXT_PUBLIC_BASE + "/ps/v1/products", {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
+        },
       })
       .then((res) => {
         setProductdata(res.data.body);
-        const isRejectedPresent: boolean = res.data.body.some(
-          (obj: any) => obj.status === "rejected" || obj.status === "waiting"
-        );
-        // console.log(isRejectedPresent);
-        setIsUnapprovedProduct(isRejectedPresent);
+        // const isRejectedPresent: boolean = res.data.body.some(
+        //   (obj: any) => obj.status === "rejected" || obj.status === "waiting"
+        // );
+        // // console.log(isRejectedPresent);
+        // setIsUnapprovedProduct(isRejectedPresent);
       })
       .catch((error) => {});
     //----------------------------------------------------------------------------

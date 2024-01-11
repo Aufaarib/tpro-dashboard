@@ -2,6 +2,8 @@
 import {
   IconBuildingStore,
   IconBurger,
+  IconHome,
+  IconShoppingBag,
   IconSpeakerphone,
   IconUser,
   IconUsers,
@@ -20,45 +22,69 @@ const Menuitems = () => {
   return [
     {
       id: uniqueId(),
-      title: "Detonator",
-      icon: IconUsers,
-      submenu: [
-        {
-          id: uniqueId(),
-          href: "/ui-components/detonator",
-          name: "List Detonator",
-          icon: <IconUser />,
-          isUnapproved: isUnapprovedDetonator,
-        },
-        {
-          id: uniqueId(),
-          href: "/ui-components/campaign",
-          name: "List Campaign",
-          icon: <IconSpeakerphone />,
-          isUnapproved: isUnapprovedCampaign,
-        },
-      ],
+      title: "Dashboard",
+      icon: IconHome,
+      href: "/ui-components/dashboard",
+      // submenu: [
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/detonator",
+      //     name: "List Detonator",
+      //     icon: <IconUser />,
+      //     isUnapproved: isUnapprovedDetonator,
+      //   },
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/campaign",
+      //     name: "List Campaign",
+      //     icon: <IconSpeakerphone />,
+      //     isUnapproved: isUnapprovedCampaign,
+      //   },
+      // ],
     },
     {
       id: uniqueId(),
       title: "Merchant",
       icon: IconBuildingStore,
-      submenu: [
-        {
-          id: uniqueId(),
-          href: "/ui-components/merchant",
-          name: "List Merchant",
-          icon: <IconUser />,
-          isUnapproved: isUnapprovedMerchant,
-        },
-        {
-          id: uniqueId(),
-          href: "/ui-components/product",
-          name: "List Product",
-          icon: <IconBurger />,
-          isUnapproved: isUnapprovedProduct,
-        },
-      ],
+      href: "/ui-components/merchant",
+      // submenu: [
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/merchant",
+      //     name: "List Merchant",
+      //     icon: <IconUser />,
+      //     isUnapproved: isUnapprovedMerchant,
+      //   },
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/product",
+      //     name: "List Product",
+      //     icon: <IconBurger />,
+      //     isUnapproved: isUnapprovedProduct,
+      //   },
+      // ],
+    },
+    {
+      id: uniqueId(),
+      title: "Product",
+      icon: IconShoppingBag,
+      href: "/ui-components/product",
+      // submenu: [
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/merchant",
+      //     name: "List Merchant",
+      //     icon: <IconUser />,
+      //     isUnapproved: isUnapprovedMerchant,
+      //   },
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/product",
+      //     name: "List Product",
+      //     icon: <IconBurger />,
+      //     isUnapproved: isUnapprovedProduct,
+      //   },
+      // ],
     },
   ];
 };

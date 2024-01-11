@@ -1,7 +1,8 @@
-import { useMediaQuery, Box, Drawer } from "@mui/material";
+import { useMediaQuery, Box, Drawer, Typography } from "@mui/material";
 import Logo from "../shared/logo/Logo";
 import SidebarItems from "./SidebarItems";
 import Upgrade from "./Updrade";
+import { IconCopyright } from "@tabler/icons-react";
 
 interface ItemType {
   isMobileSidebarOpen: boolean;
@@ -74,6 +75,19 @@ const Sidebar = ({
               </Box>
             </Box>
           </Box>
+          <Typography
+            style={{
+              fontSize: "14px",
+              fontWeight: 400,
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+              paddingBottom: "15px",
+              justifyContent: "center",
+            }}
+          >
+            <IconCopyright /> 2024, Telkomsel
+          </Typography>
         </Drawer>
       </Box>
     );

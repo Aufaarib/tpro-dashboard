@@ -11,7 +11,7 @@ const PageContainer = ({ title, description, children }: Props) => (
   <HelmetProvider>
     <div>
       <Helmet>
-        <title>Foodia Admin</title>
+        <title>T-Pro Dashboard</title>
         <link rel="icon" href="../../../favicon.ico" />
         <meta name="description" content={description} />
       </Helmet>

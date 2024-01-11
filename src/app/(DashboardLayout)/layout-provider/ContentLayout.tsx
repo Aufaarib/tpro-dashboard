@@ -1,11 +1,9 @@
 "use client";
-import { styled, Container, Box, Typography, Breadcrumbs } from "@mui/material";
+import { styled, Container, Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Header from "@/app/(DashboardLayout)/layout/header/Header";
 import Sidebar from "@/app/(DashboardLayout)/layout/sidebar/Sidebar";
 import Footer from "../layout/footer/page";
-import { IconBuildingStore } from "@tabler/icons-react";
-import { KeyboardArrowRight } from "@mui/icons-material";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -19,13 +17,14 @@ const PageWrapper = styled("div")(() => ({
   paddingBottom: "20px",
   flexDirection: "column",
   zIndex: 1,
+  backgroundColor: "transparent",
 }));
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function DashboardLayout({
+export default function ContentLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -52,13 +51,13 @@ export default function DashboardLayout({
         {/* Header */}
         {/* ------------------------------------------- */}
         <Header toggleMobileSidebar={() => setMobileSidebarOpen(true)} />
+
         {/* ------------------------------------------- */}
         {/* PageContent */}
         {/* ------------------------------------------- */}
         <Container
           sx={{
             paddingTop: "20px",
-            paddingBottom: "100px",
             maxWidth: "1200px",
           }}
         >

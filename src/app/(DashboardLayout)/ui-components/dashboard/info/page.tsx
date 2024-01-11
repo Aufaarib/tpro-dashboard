@@ -1,6 +1,6 @@
 "use client";
-import Attachment from "@/app/(DashboardLayout)/components/detonator/Attachment";
-import Info from "@/app/(DashboardLayout)/components/detonator/Info";
+import Attachment from "@/app/(DashboardLayout)/components/dashboard/Attachment";
+import Info from "@/app/(DashboardLayout)/components/dashboard/Info";
 import ModalPopup from "@/app/(DashboardLayout)/components/shared/ModalPopup";
 import { Box, Button, Grid, Stack } from "@mui/material";
 import { IconBan, IconCircleCheck } from "@tabler/icons-react";

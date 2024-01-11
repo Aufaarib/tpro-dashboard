@@ -3,29 +3,25 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  Input,
   InputAdornment,
   TextField,
   Typography,
-  createTheme,
-  styled,
   useTheme,
 } from "@mui/material";
-import BaseCard from "../shared/DashboardCard";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import door from "@/utils/DoorOpen.png";
+import BackgroundImage from "@/utils/Rectangle 60.png";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconCopyright, IconLock, IconUserFilled } from "@tabler/icons-react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import BackgroundImage from "@/utils/Rectangle 60.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Logo from "../../layout/shared/logo/Logo";
-import door from "@/utils/DoorOpen.png";
-import { IconEye, IconLock, IconUser } from "@tabler/icons-react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -38,27 +34,36 @@ const Login = () => {
   const onLogin = () => {
     setIsLoading(true);
     axios
-      .post(process.env.NEXT_PUBLIC_BASE + "/auth/login", {
-        email,
+      .post(process.env.NEXT_PUBLIC_BASE + "/as/v1/auth/signin", {
+        username,
         password,
       })
       .then((res) => {
-        const role = res?.data?.body.role;
-        const email = res?.data?.body.email;
-        const token = res?.data.body.token;
-        const username = res?.data?.body.fullname;
-        Cookies.set("role", role);
+        const token = res?.headers?.authorization;
         localStorage.setItem("TOKEN", token);
-        localStorage.setItem("USERNAME", username);
-        localStorage.setItem("ROLE", role);
-        localStorage.setItem("EMAIL", email);
-        if (role === "detonator") {
-          router.push("/ui-components/detonator");
-        } else {
-          router.refresh();
-          // window.location.href = "/authentication/sign-in";
-        }
-        // setIsLoading(false);
+        axios
+          .get(process.env.NEXT_PUBLIC_BASE + "/as/v1/auth/session", {
+            headers: {
+              authorization: localStorage.getItem("TOKEN"),
+            },
+          })
+          .then((res) => {
+            const role = res?.data?.detail.role;
+            const email = res?.data?.detail.email;
+            const username = res?.data?.detail.username;
+            Cookies.set("role", role);
+            localStorage.setItem("USERNAME", username);
+            localStorage.setItem("ROLE", role);
+            localStorage.setItem("EMAIL", email);
+            if (role === "superadmin") {
+              router.push("/ui-components/dashboard");
+            } else {
+              router.refresh();
+              // window.location.href = "/authentication/sign-in";
+            }
+            setIsLoading(false);
+          })
+          .catch((error) => {});
       })
       .catch((error) => {
         // if (error.code === "ERR_NETWORK") {
@@ -87,6 +92,7 @@ const Login = () => {
         backgroundColor: "red",
       }}
     >
+      {/* LEFT SIDE */}
       <Box
         sx={{
           display: "flex",
@@ -135,7 +141,7 @@ const Login = () => {
             <Box
               sx={{
                 display: "flex",
-                marginTop: "80px",
+                marginTop: "65px",
                 flexDirection: "column",
                 // alignItems: "center",
                 justifyContent: "center",
@@ -146,18 +152,17 @@ const Login = () => {
                   fontSize: "18px",
                   fontWeight: 500,
                   letterSpacing: "25.2px",
+                  marginBottom: "15px",
                 }}
               >
                 WELCOME
               </Typography>
-
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "10px",
                 }}
               >
                 <Typography
@@ -173,8 +178,24 @@ const Login = () => {
               </Box>
             </Box>
           </Box>
+          <Box sx={{ paddingTop: "190px" }}>
+            <Typography
+              style={{
+                fontSize: "14px",
+                fontWeight: 400,
+                display: "flex",
+                paddingLeft: "45px",
+                alignItems: "center",
+                gap: "5px",
+              }}
+            >
+              <IconCopyright /> 2024, Telkomsel
+            </Typography>
+          </Box>
         </Box>
       </Box>
+
+      {/* RIGHT SIDE */}
       <Box
         sx={{
           display: "flex",
@@ -197,7 +218,7 @@ const Login = () => {
             display: "flex",
             justifyContent: "start",
             fontSize: "32px",
-            marginBottom: "40px",
+            padding: "20px 0 20px 0",
           }}
         >
           Sign in with your account
@@ -208,8 +229,11 @@ const Login = () => {
           placeholder="Username"
           InputProps={{
             startAdornment: (
-              <InputAdornment sx={{ color: "white" }} position="start">
-                <IconUser />
+              <InputAdornment
+                sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                position="start"
+              >
+                <IconUserFilled />
               </InputAdornment>
             ),
           }}
@@ -227,24 +251,28 @@ const Login = () => {
         />
         <TextField
           onChange={(e) => setPassword(e.target.value)}
+          type={showPassword ? "password" : "text"}
           placeholder="Password"
           color="secondary"
           InputProps={{
             startAdornment: (
-              <InputAdornment sx={{ color: "white" }} position="start">
+              <InputAdornment
+                sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                position="start"
+              >
                 <IconLock />
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  sx={{ color: "white" }}
+                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   // onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             ),
@@ -267,13 +295,15 @@ const Login = () => {
             width: "100%",
             height: "56px",
             backgroundColor: "white",
+            fontSize: "16px",
             fontWeight: 600,
             color: "#333",
             borderRadius: "15px",
+            gap: "10px",
           }}
         >
           {isLoading ? (
-            <CircularProgress size="20px" sx={{ color: "white" }} />
+            <CircularProgress size="20px" sx={{ color: "#333" }} />
           ) : (
             ""
           )}

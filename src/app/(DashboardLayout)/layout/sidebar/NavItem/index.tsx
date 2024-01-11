@@ -170,6 +170,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
         // <ListItemStyled>
         <ListItemButton
           key={item.id}
+          href={item.href}
           selected={pathDirect === item.href}
           onClick={onClick}
           sx={{

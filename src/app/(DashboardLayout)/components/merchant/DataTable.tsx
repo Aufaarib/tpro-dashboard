@@ -1,101 +1,45 @@
-import { Button, Chip, SelectChangeEvent, Stack } from "@mui/material";
-import { IconEye } from "@tabler/icons-react";
-import moment from "moment";
+import {
+  Box,
+  Button,
+  Fade,
+  Menu,
+  MenuItem,
+  MenuList,
+  Select,
+  SelectChangeEvent,
+  Stack,
+} from "@mui/material";
 import Link from "next/link";
 import React, { useState } from "react";
 import { TableColumn } from "react-data-table-component";
 import DataTables from "../shared/DataTables";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { IconEye, IconPencil } from "@tabler/icons-react";
 
 interface Data {
-  id: number;
-  status: string;
-  created_at: string;
-  oauth: { fullname: string; email: string; phone: string };
+  merchant_id: number;
+  name: string;
+  description: string;
+  level: number;
+  bucket: { balance: number };
 }
 
 interface Props {
   data: Data[];
 }
 
-const columns: TableColumn<Data>[] = [
-  {
-    name: "ID",
-    selector: (row: Data) => row.id,
-    // sortable: true,
-    width: "70px",
-  },
-  {
-    name: "Fullname",
-    cell: (row: Data) => <div>{row.oauth.fullname}</div>,
-    // sortable: true,
-  },
-  {
-    name: "Email",
-    cell: (row: Data) => <div>{row.oauth.email}</div>,
-    // sortable: true,
-    width: "200px",
-  },
-  {
-    name: "Phone number",
-    cell: (row: Data) => <div>{row.oauth.phone}</div>,
-    // sortable: true,
-  },
-  {
-    name: "Registered at",
-    cell: (row: Data) => (
-      <div>{moment(row.created_at).format("DD/MM/YYYY")}</div>
-    ),
-    // sortable: true,
-  },
-  {
-    name: "Status",
-    cell: (row: Data) => (
-      <Chip
-        sx={{
-          pl: "4px",
-          pr: "4px",
-          backgroundColor:
-            row.status === "approved"
-              ? "success.main"
-              : row.status === "rejected"
-              ? "error.main"
-              : "warning.main",
-          color: "#fff",
-        }}
-        size="small"
-        label={row.status}
-      />
-    ),
-    // sortable: true,
-  },
-  {
-    name: "Action",
-    cell: (row: Data) => (
-      <Stack spacing={1} direction="row">
-        <Link
-          href={{
-            pathname: "/ui-components/merchant/info",
-            query: {
-              id: row.id,
-            },
-          }}
-        >
-          <Button variant="contained" size="small" color="info">
-            <IconEye size={20} /> View
-          </Button>
-        </Link>
-      </Stack>
-    ),
-    width: "auto",
-    // sortable: true,
-  },
-  // Add more columns as needed
-];
-
 const DataTableComponent: React.FC<Props> = ({ data }) => {
   const [filterText, setFilterText] = useState<string>("unapproved");
   const [searchBy, setSearchBy] = useState<string>("fullname");
   const [searchText, setSearchText] = useState<string>("");
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleChangeSearchBy = (event: SelectChangeEvent) => {
     setSearchBy(event.target.value);
@@ -109,28 +53,28 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
     setSearchText(event.target.value);
   };
 
-  let filteredItems: any;
-  if (filterText === "unapproved") {
-    filteredItems = data.filter(
-      (data) =>
-        data.status.toLowerCase() !== "approved" &&
-        (searchBy === "fullname"
-          ? data.oauth.fullname.toLowerCase().includes(searchText.toLowerCase())
-          : searchBy === "email"
-          ? data.oauth.email.toLowerCase().includes(searchText.toLowerCase())
-          : data.oauth.phone.toLowerCase().includes(searchText.toLowerCase()))
-    );
-  } else {
-    filteredItems = data.filter(
-      (data) =>
-        data.status.toLowerCase() === "approved" &&
-        (searchBy === "fullname"
-          ? data.oauth.fullname.toLowerCase().includes(searchText.toLowerCase())
-          : searchBy === "email"
-          ? data.oauth.email.toLowerCase().includes(searchText.toLowerCase())
-          : data.oauth.phone.toLowerCase().includes(searchText.toLowerCase()))
-    );
-  }
+  // let filteredItems: any;
+  // if (filterText === "unapproved") {
+  //   filteredItems = data.filter(
+  //     (data) =>
+  //       data.status.toLowerCase() !== "approved" &&
+  //       (searchBy === "fullname"
+  //         ? data.oauth.fullname.toLowerCase().includes(searchText.toLowerCase())
+  //         : searchBy === "email"
+  //         ? data.oauth.email.toLowerCase().includes(searchText.toLowerCase())
+  //         : data.oauth.phone.toLowerCase().includes(searchText.toLowerCase()))
+  //   );
+  // } else {
+  //   filteredItems = data.filter(
+  //     (data) =>
+  //       data.status.toLowerCase() === "approved" &&
+  //       (searchBy === "fullname"
+  //         ? data.oauth.fullname.toLowerCase().includes(searchText.toLowerCase())
+  //         : searchBy === "email"
+  //         ? data.oauth.email.toLowerCase().includes(searchText.toLowerCase())
+  //         : data.oauth.phone.toLowerCase().includes(searchText.toLowerCase()))
+  //   );
+  // }
   const searchOption = [
     {
       id: 1,
@@ -149,6 +93,93 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
     },
   ];
 
+  const columns: TableColumn<Data>[] = [
+    {
+      name: "No",
+      selector: (_row, i: any) => i + 1,
+      // sortable: true,
+      width: "190px",
+      style: {
+        paddingLeft: "30px",
+      },
+    },
+    {
+      name: "Name",
+      cell: (row: Data) => <div>{row.name}</div>,
+      // sortable: true,
+      width: "auto",
+    },
+    {
+      name: "Description",
+      cell: (row: Data) => <div>{row.description}</div>,
+      // sortable: true,
+      width: "300px",
+    },
+    {
+      name: "Level",
+      cell: (row: Data) => <div>{row.level}</div>,
+      // sortable: true,
+      width: "auto",
+    },
+    // {
+    //   name: "Total Topup",
+    //   cell: (row: Data) => (
+    //     <div>
+    //       {new Intl.NumberFormat("id-ID", {
+    //         style: "currency",
+    //         currency: "IDR",
+    //         minimumFractionDigits: 0,
+    //       }).format(row.bucket?.balance)}
+    //     </div>
+    //   ),
+    //   // sortable: true,
+    //   width: "400px",
+    // },
+    {
+      name: "Action",
+      cell: (row: Data, index) => (
+        <div>
+          <Button
+            sx={{
+              color: "white",
+              backgroundColor: "#191C28",
+              fontSize: "14px",
+              fontWeight: 600,
+              height: "32px",
+              borderRadius: "8px",
+              paddingX: "15px",
+              ":hover": {
+                backgroundColor: "#191C28",
+              },
+            }}
+            aria-controls={open ? "fade-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            Dashboard
+            <KeyboardArrowDown />
+          </Button>
+          <Menu
+            sx={{ borderRadius: "10px 0px 10px 10px" }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Fade}
+          >
+            <MenuItem onClick={handleClose}>
+              <IconPencil /> Edit
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <IconEye /> View Bucket
+            </MenuItem>
+          </Menu>
+        </div>
+      ),
+      // sortable: true,
+    },
+    // Add more columns as needed
+  ];
+
   return (
     <>
       <DataTables
@@ -159,7 +190,8 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
         onChangeSearch={handleChangeSearch}
         onChangeSearchBy={handleChangeSearchBy}
         columns={columns}
-        data={filteredItems}
+        data={data}
+        pagination={true}
       />
     </>
   );

@@ -18,6 +18,7 @@ interface Data {
   valueSearchBy?: any;
   onChange?: any;
   columns?: any;
+  pagination?: any;
   data?: any;
   onChangeSearch?: any;
   onChangeSearchBy?: any;
@@ -28,6 +29,7 @@ const DataTables: React.FC<Data> = ({
   value,
   valueSearchBy,
   onChange,
+  pagination,
   columns,
   data,
   onChangeSearch,
@@ -36,79 +38,11 @@ const DataTables: React.FC<Data> = ({
 }) => {
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "10px",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
-          <TextField
-            size="small"
-            placeholder="Search..."
-            label="Search By"
-            InputProps={{
-              sx: {
-                paddingLeft: 0,
-                // Add other styling as needed
-              },
-              startAdornment: (
-                <FormControl
-                  sx={{ minWidth: 138, marginRight: "10px" }}
-                  size="small"
-                >
-                  <Select
-                    labelId="demo"
-                    id="demo"
-                    value={valueSearchBy}
-                    label="Search By"
-                    onChange={onChangeSearchBy}
-                    sx={{
-                      borderEndEndRadius: "0px",
-                      borderTopRightRadius: "0px",
-                    }}
-                  >
-                    {searchOption?.map((data) => (
-                      <MenuItem key={data.id} value={data.value}>
-                        {data.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-            onChange={onChangeSearch}
-          />
-        </Box>
-        {/* <Typography>Filter : </Typography> */}
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id="demo-select-small-label">Status Filter</InputLabel>
-          <Select
-            labelId="demo-select-small-label"
-            id="demo-select-small"
-            value={value}
-            label="Status Filter"
-            onChange={onChange}
-          >
-            {/* <MenuItem value="waiting">Waiting</MenuItem> */}
-            <MenuItem value="approved">Approved</MenuItem>
-            <MenuItem value="unapproved">Unapproved</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
       <DataTable
         customStyles={CustomStylesTable}
         columns={columns}
         data={data}
-        pagination
+        pagination={pagination}
       />
     </>
   );

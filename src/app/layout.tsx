@@ -12,13 +12,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <title>Foodia Admin</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <head>
+        <title>T-Pro Dashboard</title>
+        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap"
-        rel="stylesheet"
-      ></link>
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap"
+      rel="stylesheet"
+    ></link> */}
+      </head>
       <body>
         <ThemeProvider theme={baselightTheme}>
           <AppProvider>
