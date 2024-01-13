@@ -1,24 +1,13 @@
 "use client";
 import {
   IconBuildingStore,
-  IconBurger,
+  IconCreditCard,
   IconHome,
   IconShoppingBag,
-  IconSpeakerphone,
-  IconUser,
-  IconUsers,
 } from "@tabler/icons-react";
 import { uniqueId } from "lodash";
-import { useAppContext } from "../../components/shared/Context";
 
 const Menuitems = () => {
-  const {
-    isUnapprovedDetonator,
-    isUnapprovedCampaign,
-    isUnapprovedMerchant,
-    isUnapprovedProduct,
-  } = useAppContext();
-
   return [
     {
       id: uniqueId(),
@@ -69,6 +58,28 @@ const Menuitems = () => {
       title: "Product",
       icon: IconShoppingBag,
       href: "/ui-components/product",
+      // submenu: [
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/merchant",
+      //     name: "List Merchant",
+      //     icon: <IconUser />,
+      //     isUnapproved: isUnapprovedMerchant,
+      //   },
+      //   {
+      //     id: uniqueId(),
+      //     href: "/ui-components/product",
+      //     name: "List Product",
+      //     icon: <IconBurger />,
+      //     isUnapproved: isUnapprovedProduct,
+      //   },
+      // ],
+    },
+    {
+      id: uniqueId(),
+      title: "Transactions",
+      icon: IconCreditCard,
+      href: "/ui-components/transactions",
       // submenu: [
       //   {
       //     id: uniqueId(),

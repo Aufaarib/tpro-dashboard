@@ -26,6 +26,7 @@ import {
 } from "@tabler/icons-react";
 import { IconSquareRoundedArrowRightFilled } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface ItemType {
   toggleMobileSidebar: (event: React.MouseEvent<HTMLElement>) => void;
@@ -36,7 +37,7 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
 
   const onLogout = () => {
     localStorage.clear();
-    router.push("/ui-components/auth");
+    // router.push("/ui-components/auth");
   };
   // const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   // const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -78,20 +79,22 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
         {/* <Search/> */}
         <Box flexGrow={1} />
         <Stack spacing={1} direction="row" alignItems="center">
-          <IconButton
-            onClick={() => onLogout()}
-            style={{
-              borderRadius: 0,
-              fontSize: "14px",
-              fontWeight: 400,
-              display: "flex",
-              color: "#333",
-              alignItems: "center",
-              gap: "5px",
-            }}
-          >
-            <IconLogout /> Logout
-          </IconButton>
+          <Link href="/ui-components/auth">
+            <IconButton
+              onClick={() => onLogout()}
+              style={{
+                borderRadius: 0,
+                fontSize: "14px",
+                fontWeight: 400,
+                display: "flex",
+                color: "#333",
+                alignItems: "center",
+                gap: "5px",
+              }}
+            >
+              <IconLogout /> Logout
+            </IconButton>
+          </Link>
           {/* <Profile /> */}
         </Stack>
       </ToolbarStyled>

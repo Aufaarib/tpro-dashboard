@@ -12,14 +12,14 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { TableColumn } from "react-data-table-component";
-import DataTables from "../shared/DataTables";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { IconEye, IconPencil } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import DataTables from "../../shared/DataTables";
+import axios from "axios";
 
 interface Data {
-  user_id: number;
-  merchant_id: string;
+  merchant_id: number;
   name: string;
   description: string;
   level: number;
@@ -37,21 +37,8 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const router = useRouter();
   const open = Boolean(anchorEl);
-
-  const handleClick = (
-    event: React.MouseEvent<HTMLElement>,
-    merchant_id: any,
-    name: any,
-    user_id: any,
-    level: any,
-    description: any
-  ) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    localStorage.setItem("Merchant_id", merchant_id);
-    localStorage.setItem("Name", name);
-    localStorage.setItem("User_id", user_id);
-    localStorage.setItem("Level", level);
-    localStorage.setItem("Description", description);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -108,6 +95,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
       label: "Phone Number",
     },
   ];
+
   const columns: TableColumn<Data>[] = [
     {
       name: "No",
@@ -131,14 +119,14 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
       width: "300px",
     },
     {
-      name: "Level",
+      name: "Balance",
       cell: (row: Data) => <div>{row.level}</div>,
       // sortable: true,
       width: "auto",
     },
     {
       name: "Action",
-      cell: (row: Data, index: number) => (
+      cell: (row: Data, index) => (
         <div>
           <Button
             sx={{
@@ -155,16 +143,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
             }}
             aria-controls={open ? "fade-menu" : undefined}
             aria-expanded={open ? "true" : undefined}
-            onClick={(e) =>
-              handleClick(
-                e,
-                row.merchant_id,
-                row.name,
-                row.user_id,
-                row.level,
-                row.description
-              )
-            }
+            onClick={handleClick}
           >
             Manage
             <KeyboardArrowDown />
@@ -176,49 +155,66 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
             onClose={handleClose}
             TransitionComponent={Fade}
           >
-            <Link
-              href={{
-                pathname: "/ui-components/merchant/edit",
-                query: {
-                  merchant_id: row.merchant_id,
-                },
-              }}
-            >
-              <MenuItem
-                sx={{
-                  color: "black",
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  ":hover": {
-                    color: "white",
-                    backgroundColor: "#191C28",
+            <MenuItem>
+              <Link
+                href={{
+                  pathname: "/ui-components/merchant/bucket/edit",
+                  query: {
+                    id: row.merchant_id,
                   },
                 }}
               >
+                {/* <Button
+                sx={{
+                  border: "1.2px solid #191C28",
+                  color: "black",
+                  backgroundColor: "white",
+                  fontSize: "14px",
+                  fontWeight: 400,
+                  width: "115px",
+                  height: "32px",
+                  borderRadius: "8px",
+                  paddingX: "15px",
+                  ":hover": {
+                    backgroundColor: "#191C28",
+                  },
+                }}
+                >
+                </Button> */}
                 <IconPencil />
                 Edit
-              </MenuItem>
-            </Link>
-            <Link
-              href={{
-                pathname: "/ui-components/merchant/bucket",
-              }}
-            >
-              <MenuItem
-                sx={{
-                  color: "black",
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  ":hover": {
-                    color: "white",
-                    backgroundColor: "#191C28",
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link
+                href={{
+                  pathname: "/ui-components/merchant/bucket/topup",
+                  query: {
+                    id: row.merchant_id,
                   },
                 }}
               >
-                <IconEye />
-                View Bucket
-              </MenuItem>
-            </Link>
+                {/* <Button
+                sx={{
+                  border: "1.2px solid #191C28",
+                  color: "black",
+                  backgroundColor: "white",
+                  fontSize: "14px",
+                  fontWeight: 400,
+                  width: "115px",
+                  height: "32px",
+                  borderRadius: "8px",
+                  paddingX: "15px",
+                  ":hover": {
+                    backgroundColor: "#191C28",
+                  },
+                }}
+                >
+                </Button> */}
+                <IconPencil />
+                Topup
+              </Link>
+            </MenuItem>
           </Menu>
         </div>
       ),
@@ -228,7 +224,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
   ];
 
   const openEdit = () => {
-    router.replace("/ui-components/merchant/edit");
+    router.replace("/ui-components/bucket/edit");
   };
 
   return (

@@ -19,12 +19,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Logo from "../../layout/shared/logo/Logo";
+import { useAppContext } from "../shared/Context";
 
 const Login = () => {
   const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -56,14 +57,14 @@ const Login = () => {
             localStorage.setItem("ROLE", role);
             localStorage.setItem("EMAIL", email);
             if (role === "superadmin") {
-              router.push("/ui-components/dashboard");
+              router.replace("/ui-components/dashboard");
             } else {
               router.refresh();
               // window.location.href = "/authentication/sign-in";
             }
-            setIsLoading(false);
           })
           .catch((error) => {});
+        setIsLoading(false);
       })
       .catch((error) => {
         // if (error.code === "ERR_NETWORK") {

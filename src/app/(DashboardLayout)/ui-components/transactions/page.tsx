@@ -1,16 +1,16 @@
 "use client";
 import { Grid, Paper } from "@mui/material";
-import ProductData from "@/app/(DashboardLayout)/components/product/List";
+import TransactionsData from "@/app/(DashboardLayout)/components/transactions/List";
 import PageContainer from "../../components/container/PageContainer";
 
-const ProductManagement = () => {
+const TransactionsManagement = () => {
   return (
     <Grid container spacing={0}>
       <Grid item xs={12} lg={12}>
-        <ProductData />
+        <TransactionsData />
       </Grid>
     </Grid>
   );
 };
 
-export default ProductManagement;
+export default TransactionsManagement;

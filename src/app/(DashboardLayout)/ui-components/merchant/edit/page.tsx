@@ -10,23 +10,36 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const NewMerchant = () => {
+type dropdown = {
+  id: number;
+  fullname: number;
+};
+
+const EditMerchant = () => {
   const searchParams = useSearchParams();
   const { usersData } = useAppContext();
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
-  const [description, setDescription] = useState("");
   const [level, setLevel] = useState("");
+  const [description, setDescription] = useState("");
 
-  const postMerchant = () => {
+  useEffect(() => {
+    setName(`${localStorage.getItem("Name")}`);
+    setDescription(`${localStorage.getItem("Description")}`);
+    setParent(`${localStorage.getItem("User_id")}`);
+    setLevel(`${localStorage.getItem("Level")}`);
+  }, []);
+
+  const editMerchant = () => {
     axios
-      .post(
-        process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants",
+      .put(
+        process.env.NEXT_PUBLIC_BASE +
+          `/ms/v1/merchants/${localStorage.getItem("Merchant_id")}`,
         {
           name,
           description,
-          user_id: parent,
-          level,
+          user_id: parseInt(parent),
+          level: parseInt(level),
         },
         { headers: { authorization: localStorage.getItem("TOKEN") } }
       )
@@ -50,15 +63,16 @@ const NewMerchant = () => {
       <Grid container spacing={0}>
         <Grid item xs={12} lg={12}>
           <Form
-            detailInformation="Please enter Merchant Name, Description, Level and Parent"
-            formTitle="New Merchant Form"
-            title="New Merchant"
-            onPost={postMerchant}
+            detailInformation="Edit Merchant Name, Description, Level and Parent"
+            formTitle="Edit Merchant Form"
+            title="Edit Merchant"
+            onPost={editMerchant}
           >
             <TextFields
               onChange={(e: any) => setName(e.target.value)}
               label="Name"
               required={true}
+              value={name}
             />
             <Dropdown
               onChange={(e: any) => setParent(e.target.value)}
@@ -77,6 +91,7 @@ const NewMerchant = () => {
             <TextFields
               label="Description"
               onChange={(e: any) => setDescription(e.target.value)}
+              value={description}
               // required={true}
             />
           </Form>
@@ -86,4 +101,4 @@ const NewMerchant = () => {
   );
 };
 
-export default NewMerchant;
+export default EditMerchant;

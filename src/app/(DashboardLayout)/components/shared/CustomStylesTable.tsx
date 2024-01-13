@@ -50,28 +50,29 @@ const CustomStylesTable = {
       fontWeight: 600,
     },
   },
-  // pagination: {
-  //   style: {
-  //     backgroundColor: "transparent",
-  //     borderTop: "none",
-  //     padding: "10px",
-  //   },
-  //   pageButtonsStyle: {
-  //     borderRadius: "5px",
-  //     border: "1px solid #ccc",
-  //     margin: "2px",
-  //     color: "#007BFF",
-  //     backgroundColor: "white",
-  //   },
-  //   activePageButtonStyle: {
-  //     backgroundColor: "#007BFF",
-  //     color: "white",
-  //   },
-  //   disabledPageButtonStyle: {
-  //     color: "#ccc",
-  //     cursor: "not-allowed",
-  //   },
-  // },
+  pagination: {
+    style: {
+      justifyContent: "center",
+      backgroundColor: "transparent",
+      borderTop: "none",
+      padding: "10px",
+    },
+    pageButtonsStyle: {
+      borderRadius: "5px",
+      border: "1px solid #ccc",
+      margin: "2px",
+      color: "#007BFF",
+      backgroundColor: "white",
+    },
+    activePageButtonStyle: {
+      backgroundColor: "#007BFF",
+      color: "white",
+    },
+    disabledPageButtonStyle: {
+      color: "#ccc",
+      cursor: "not-allowed",
+    },
+  },
 };
 
 export default CustomStylesTable;

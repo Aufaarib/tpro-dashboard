@@ -15,7 +15,31 @@ import {
 } from "@tabler/icons-react";
 
 const List = () => {
-  const { merchantData } = useAppContext();
+  const { usersData } = useAppContext();
+  const [merchantData, setMerchantData] = useState([]);
+  const [username, setUsername] = useState<any>("");
+  const [role, setRole] = useState<any>("");
+
+  console.log(usersData);
+
+  const getMerchant = () => {
+    axios
+      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
+        },
+      })
+      .then((res) => {
+        setMerchantData(res.data.body);
+      })
+      .catch((error) => {});
+  };
+
+  useEffect(() => {
+    getMerchant();
+    setUsername(localStorage.getItem("USERNAME"));
+    setRole(localStorage.getItem("ROLE"));
+  }, []);
 
   return (
     <BaseCard title="Dashboard">
@@ -36,43 +60,62 @@ const List = () => {
               height: "165px",
               display: "flex",
               flexDirection: "row",
-              background: "linear-gradient(180deg, #DA2128 0%, #A7181E 100%)",
               alignItems: "center",
+              background: "linear-gradient(180deg, #DA2128 0%, #A7181E 100%)",
               borderRadius: "30px",
-              gap: "30px",
+              justifyContent: "space-between",
             }}
           >
-            <Image
-              src={profile}
-              alt="NotFound"
-              width={100} // Set the desired width
-              height={100} // Set the desired height
-            />
-            <Box>
-              <Typography
-                sx={{ color: "rgba(255, 255, 255, 0.87)", fontSize: "16px" }}
-              >
-                Halo
-              </Typography>
-              <Typography sx={{ color: "#FFF", fontSize: "24px" }}>
-                Andriana Putera
-              </Typography>
-              <Typography
-                sx={{ color: "rgba(255, 255, 255, 0.87)", fontSize: "16px" }}
-              >
-                Administrator
-              </Typography>
-            </Box>
-            <IconCircleFilled
-              style={{
-                position: "absolute",
-                marginLeft: "400px",
-                marginBottom: "75px",
-                border: "0px",
-                color: "rgba(255, 255, 255, 0.38)",
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: "30px",
               }}
-            />
-            <Box sx={{ paddingLeft: "130px" }}>
+            >
+              <Image
+                src={profile}
+                alt="NotFound"
+                width={100} // Set the desired width
+                height={100} // Set the desired height
+              />
+              <Box>
+                <Typography
+                  sx={{ color: "rgba(255, 255, 255, 0.87)", fontSize: "16px" }}
+                >
+                  Halo
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#FFF",
+                    fontSize: "24px",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {username}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "rgba(255, 255, 255, 0.87)",
+                    fontSize: "16px",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {role}
+                </Typography>
+              </Box>
+              <IconCircleFilled
+                style={{
+                  position: "absolute",
+                  marginLeft: "380px",
+                  marginBottom: "75px",
+                  border: "0px",
+                  color: "rgba(255, 255, 255, 0.38)",
+                }}
+              />
+            </Box>
+            <Box sx={{ display: "flex" }}>
               <Button
                 sx={{
                   width: "140px",

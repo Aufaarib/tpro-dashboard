@@ -1,16 +1,26 @@
 import { Box, Button, Link, Typography } from "@mui/material";
 import { IconBuildingStore } from "@tabler/icons-react";
-import ContentCard from "../shared/ContentCard";
-import { Dropdown, TextFields } from "../shared/Inputs";
+import ContentCard from "./ContentCard";
+import { Dropdown, TextFields } from "./Inputs";
 import React from "react";
 
 type Props = {
   detailInformation?: any;
   title?: any;
+  formTitle?: any;
+  onPost?: any;
+  onCancel?: any;
   children?: React.ReactNode;
 };
 
-const Form = ({ detailInformation, title, children }: Props) => {
+const Form = ({
+  detailInformation,
+  title,
+  children,
+  formTitle,
+  onPost,
+  onCancel,
+}: Props) => {
   const breadcrumbs = [
     <Link
       underline="hover"
@@ -40,7 +50,7 @@ const Form = ({ detailInformation, title, children }: Props) => {
     <>
       <ContentCard
         icon={<IconBuildingStore />}
-        title="New Merchant"
+        title={title}
         breadcrumb={breadcrumbs}
       >
         <Box
@@ -76,23 +86,24 @@ const Form = ({ detailInformation, title, children }: Props) => {
           <Box
             sx={{
               width: "70%",
-              height: "513px",
-              backgroundColor: "gray",
+              // height: "513px",
+              backgroundColor: "#F5F6F8",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               borderRadius: "12px",
-              boxShadow: "0px 0px 24px 0px rgba(51, 57, 83, 0.06)",
+              boxShadow: "0px 0px 24px 0px rgba(51, 57, 83, 0.1)",
             }}
           >
-            <Typography sx={{ paddingY: "10px" }}>{title}</Typography>
+            <Typography sx={{ paddingY: "10px" }}>{formTitle}</Typography>
             <Box
               sx={{
                 backgroundColor: "white",
                 width: "100%",
-                height: "100%",
+                // height: "100%",
                 borderRadius: "0 0 12px 12px",
                 padding: "30px",
+                paddingBottom: "30px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
@@ -107,6 +118,7 @@ const Form = ({ detailInformation, title, children }: Props) => {
                 }}
               >
                 <Button
+                  onClick={onCancel}
                   sx={{
                     height: "38px",
                     width: "120px",
@@ -118,6 +130,7 @@ const Form = ({ detailInformation, title, children }: Props) => {
                   Cancel
                 </Button>
                 <Button
+                  onClick={onPost}
                   sx={{
                     height: "38px",
                     width: "120px",

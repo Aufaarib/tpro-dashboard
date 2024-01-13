@@ -58,26 +58,6 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
     setOpen(!open);
   };
 
-  const ListItemStyled = styled(ListItemButton)(() => ({
-    display: "flex",
-    marginBottom: "8px",
-    marginLeft: "40px",
-    padding: "8px 10px",
-    borderRadius: "9px",
-    color: "white",
-    paddingLeft: "10px",
-    "&:hover": {
-      backgroundColor: "black",
-    },
-    "&.Mui-selected": {
-      color: "black",
-      backgroundColor: "white",
-      "&:hover": {
-        backgroundColor: "white",
-      },
-    },
-  }));
-
   return (
     <List component="div" disablePadding key={item.id}>
       {item.submenu ? (
@@ -124,7 +104,7 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
                 key={t.id}
                 href={t.href}
                 selected={pathDirect === t.href}
-                onClick={onClick}
+                // onClick={onClick}
                 sx={{
                   display: "flex",
                   marginBottom: "8px",
@@ -168,44 +148,45 @@ const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
         </>
       ) : (
         // <ListItemStyled>
-        <ListItemButton
-          key={item.id}
-          href={item.href}
-          selected={pathDirect === item.href}
-          onClick={onClick}
-          sx={{
-            display: "flex",
-            marginBottom: "8px",
-            marginLeft: "40px",
-            padding: "8px 10px",
-            borderRadius: "9px",
-            color: "white",
-            paddingLeft: "10px",
-            "&:hover": {
-              backgroundColor: "black",
-            },
-            "&.Mui-selected": {
-              color: "black",
-              backgroundColor: "white",
-              "&:hover": {
-                backgroundColor: "white",
-              },
-            },
-          }}
-        >
-          <ListItemIcon
+        <Link href={item.href}>
+          <ListItemButton
+            key={item.id}
+            selected={pathDirect === item.href}
+            // onClick={onClick}
             sx={{
-              minWidth: "36px",
-              p: "3px 0",
-              color: "inherit",
+              display: "flex",
+              marginBottom: "8px",
+              // marginLeft: "40px",
+              // padding: "8px 10px",
+              borderRadius: "15px 0px 0px 15px",
+              color: "white",
+              paddingLeft: "10px",
+              "&:hover": {
+                backgroundColor: "black",
+              },
+              "&.Mui-selected": {
+                color: "black",
+                backgroundColor: "#FFF",
+                "&:hover": {
+                  backgroundColor: "#FFF",
+                },
+              },
             }}
           >
-            {itemIcon}
-          </ListItemIcon>
-          <ListItemText>
-            <>{item.title}</>
-          </ListItemText>
-        </ListItemButton>
+            <ListItemIcon
+              sx={{
+                minWidth: "36px",
+                p: "3px 0",
+                color: "inherit",
+              }}
+            >
+              {itemIcon}
+            </ListItemIcon>
+            <ListItemText>
+              <>{item.title}</>
+            </ListItemText>
+          </ListItemButton>
+        </Link>
       )}
     </List>
   );

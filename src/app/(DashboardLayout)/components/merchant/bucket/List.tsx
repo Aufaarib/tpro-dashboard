@@ -1,18 +1,19 @@
-import { useAppContext } from "../shared/Context";
-import BaseCard from "../shared/ContentCard";
-import DataTableComponent from "./DataTable";
 import { Link, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ContentCard from "../../shared/ContentCard";
+import { useAppContext } from "../../shared/Context";
+import DataTableComponent from "./DataTable";
 
 const List = () => {
-  const [merchantData, setMerchantData] = useState([]);
-  const { usersData } = useAppContext();
+  const [data, setData] = useState([]);
 
-  console.log(usersData);
+  useEffect(() => {
+    getBucket();
+  }, []);
 
-  const getMerchant = () => {
+  const getBucket = () => {
     axios
       .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
         headers: {
@@ -20,19 +21,10 @@ const List = () => {
         },
       })
       .then((res) => {
-        setMerchantData(res.data.body);
-        // const isRejectedPresent: boolean = res.data.body.some(
-        //   (obj: any) => obj.status === "rejected" || obj.status === "waiting"
-        // );
-        // // console.log(isRejectedPresent);
-        // setIsUnapprovedDetonator(isRejectedPresent);
+        setData(res.data.body);
       })
       .catch((error) => {});
   };
-
-  useEffect(() => {
-    getMerchant();
-  }, []);
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     event.preventDefault();
@@ -67,13 +59,13 @@ const List = () => {
 
   return (
     <>
-      <BaseCard
-        title="Merchant"
+      <ContentCard
+        title="Bucket"
         breadcrumb={breadcrumbs}
-        path="/ui-components/merchant/new-merchant"
+        path="/ui-components/merchant/bucket/new-bucket"
       >
-        <DataTableComponent data={merchantData} />
-      </BaseCard>
+        <DataTableComponent data={data} />
+      </ContentCard>
     </>
   );
 };

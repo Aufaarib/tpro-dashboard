@@ -5,9 +5,10 @@ type Props = {
   required?: any;
   value?: any;
   onChange?: any;
+  options?: any;
 };
 
-export const TextFields = ({ label, required, onChange }: Props) => {
+export const TextFields = ({ label, required, onChange, value }: Props) => {
   return (
     <Box>
       <Typography
@@ -33,6 +34,7 @@ export const TextFields = ({ label, required, onChange }: Props) => {
       </Typography>
       <TextField
         onChange={onChange}
+        value={value}
         sx={{
           width: "100%",
           border: "1.2px solid #EBEBEB",
@@ -50,7 +52,13 @@ export const TextFields = ({ label, required, onChange }: Props) => {
   );
 };
 
-export const Dropdown = ({ value, label, required, onChange }: Props) => {
+export const Dropdown = ({
+  value,
+  label,
+  required,
+  onChange,
+  options,
+}: Props) => {
   return (
     <Box>
       <Typography
@@ -90,12 +98,9 @@ export const Dropdown = ({ value, label, required, onChange }: Props) => {
         onChange={onChange}
         value={value}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
+        {options?.map((data: any) => (
+          <MenuItem value={data.id}>{data.fullname}</MenuItem>
+        ))}
       </Select>
     </Box>
   );

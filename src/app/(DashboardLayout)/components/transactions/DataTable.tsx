@@ -10,11 +10,14 @@ import { KeyboardArrowDown } from "@mui/icons-material";
 
 interface Data {
   id: number;
-  product_code: string;
-  name: string;
-  description: string;
-  type: number;
-  price: string;
+  amount: number;
+  msisdn: string;
+  serial_number: string;
+  denomination: string;
+  type: string;
+  status: string;
+  created_at: string;
+  merchant: { name: string };
 }
 
 interface Props {
@@ -23,76 +26,98 @@ interface Props {
 
 const columns: TableColumn<Data>[] = [
   {
-    name: "ID",
-    selector: (row: Data) => row.id,
+    name: "No",
+    selector: (_row, i: any) => i + 1,
     // sortable: true,
     width: "70px",
-  },
-  {
-    name: "Code",
-    cell: (row: Data) => <div>{row.product_code}</div>,
-    // sortable: true,
+    style: {
+      paddingLeft: "30px",
+    },
   },
   {
     name: "Name",
-    cell: (row: Data) => <div>{row.name}</div>,
+    cell: (row: Data) => <div>{row.merchant.name}</div>,
     // sortable: true,
+    width: "auto",
   },
   {
-    name: "Description",
-    cell: (row: Data) => <div>{row.description}</div>,
-    // sortable: true,
-    width: "260px",
-  },
-  {
-    name: "Tipe",
-    cell: (row: Data) => <div>{row.type}</div>,
+    name: "Amount",
+    cell: (row: Data) => <div>{row.amount}</div>,
     // sortable: true,
     width: "100px",
   },
   {
-    name: "Price",
-    cell: (row: Data) => (
-      <div>Rp {row.price.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</div>
-    ),
+    name: "Msisdn",
+    cell: (row: Data) => <div>{row.msisdn}</div>,
     // sortable: true,
+    width: "auto",
   },
   {
-    name: "Action",
-    cell: (row: Data) => (
-      <Stack spacing={1} direction="row">
-        <Link
-          href={{
-            pathname: "/ui-components/product/edit",
-            query: {
-              id: row.id,
-            },
-          }}
-        >
-          <Button
-            sx={{
-              border: "1.2px solid #191C28",
-              color: "black",
-              backgroundColor: "white",
-              fontSize: "14px",
-              fontWeight: 400,
-              width: "115px",
-              height: "32px",
-              borderRadius: "8px",
-              paddingX: "15px",
-              ":hover": {
-                backgroundColor: "#191C28",
-              },
-            }}
-          >
-            <IconPencil />
-            Edit
-          </Button>
-        </Link>
-      </Stack>
-    ),
+    name: "Serial Number",
+    cell: (row: Data) => <div>{row.serial_number}</div>,
     // sortable: true,
+    width: "auto",
   },
+  {
+    name: "Denomination",
+    cell: (row: Data) => <div>{row.denomination}</div>,
+    // sortable: true,
+    width: "auto",
+  },
+  {
+    name: "Type",
+    cell: (row: Data) => <div>{row.type}</div>,
+    // sortable: true,
+    width: "90px",
+  },
+  {
+    name: "Status",
+    cell: (row: Data) => <div>{row.status}</div>,
+    // sortable: true,
+    width: "110px",
+  },
+  {
+    name: "Created At",
+    cell: (row: Data) => <div>{row.created_at}</div>,
+    // sortable: true,
+    width: "auto",
+  },
+  // {
+  //   name: "Action",
+  //   cell: (row: Data) => (
+  //     <Stack spacing={1} direction="row">
+  //       <Link
+  //         href={{
+  //           // pathname: "/ui-components/detonator/info",
+  //           query: {
+  //             id: row.id,
+  //           },
+  //         }}
+  //       >
+  //         <Button
+  //           sx={{
+  //             border: "1.2px solid #191C28",
+  //             color: "black",
+  //             backgroundColor: "white",
+  //             fontSize: "14px",
+  //             fontWeight: 400,
+  //             width: "115px",
+  //             height: "32px",
+  //             borderRadius: "8px",
+  //             paddingX: "15px",
+  //             ":hover": {
+  //               backgroundColor: "#191C28",
+  //             },
+  //           }}
+  //         >
+  //           <IconPencil />
+  //           Edit
+  //         </Button>
+  //       </Link>
+  //     </Stack>
+  //   ),
+  //   // sortable: true,
+  // },
   // Add more columns as needed
 ];
 

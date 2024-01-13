@@ -1,37 +1,28 @@
-import { useAppContext } from "../shared/Context";
-import BaseCard from "../shared/ContentCard";
-import DataTableComponent from "./DataTable";
-import { Link, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import BaseCard from "../shared/ContentCard";
+import DataTableComponent from "./DataTable";
+import { useAppContext } from "../shared/Context";
+import { Link, Typography } from "@mui/material";
 
 const List = () => {
-  const [merchantData, setMerchantData] = useState([]);
-  const { usersData } = useAppContext();
+  const [transactionsData, setTransactionsData] = useState([]);
 
-  console.log(usersData);
-
-  const getMerchant = () => {
+  const getTransaction = () => {
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
+      .get(process.env.NEXT_PUBLIC_BASE + "/ts/v1/transaction", {
         headers: {
           authorization: localStorage.getItem("TOKEN"),
         },
       })
       .then((res) => {
-        setMerchantData(res.data.body);
-        // const isRejectedPresent: boolean = res.data.body.some(
-        //   (obj: any) => obj.status === "rejected" || obj.status === "waiting"
-        // );
-        // // console.log(isRejectedPresent);
-        // setIsUnapprovedDetonator(isRejectedPresent);
+        setTransactionsData(res.data.body);
       })
       .catch((error) => {});
   };
 
   useEffect(() => {
-    getMerchant();
+    getTransaction();
   }, []);
 
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
@@ -68,11 +59,11 @@ const List = () => {
   return (
     <>
       <BaseCard
-        title="Merchant"
+        title="Transactions"
         breadcrumb={breadcrumbs}
-        path="/ui-components/merchant/new-merchant"
+        path="/ui-components/product/new-product"
       >
-        <DataTableComponent data={merchantData} />
+        <DataTableComponent data={transactionsData} />
       </BaseCard>
     </>
   );

@@ -11,7 +11,7 @@ const SidebarItems = ({ toggleMobileSidebar }: any) => {
   const menuItems = Menuitems();
 
   return (
-    <Box sx={{ px: 2 }}>
+    <Box sx={{ paddingLeft: 2 }}>
       <List sx={{ pt: 0 }} className="sidebarNav" component="div">
         {menuItems.map((item) => {
           // {/********SubHeader**********/}
