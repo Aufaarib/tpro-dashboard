@@ -5,8 +5,9 @@ import {
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
 import { Grid } from "@mui/material";
+import { IconBuildingStore, IconShoppingBag } from "@tabler/icons-react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -29,6 +30,7 @@ const NewProduct = () => {
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
   const [merchantData, setMerchantData] = useState([]);
+  const router = useRouter();
 
   const getMerchant = () => {
     axios
@@ -92,6 +94,10 @@ const NewProduct = () => {
     value: c.merchant_id,
   }));
 
+  const onCancel = () => {
+    router.replace("/ui-components/product");
+  };
+
   return (
     <>
       <Grid container spacing={0}>
@@ -101,6 +107,8 @@ const NewProduct = () => {
             formTitle="New Product Form"
             detailInformation="Please enter Code, Name, Merchant, Price, Type and Description"
             onPost={newProduct}
+            onCancel={() => onCancel()}
+            icon={<IconShoppingBag />}
           >
             <TextFields
               onChange={(e: any) => setProductCode(e.target.value)}

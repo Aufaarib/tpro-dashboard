@@ -5,6 +5,7 @@ import { Link, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { IconBuildingStore } from "@tabler/icons-react";
 
 const List = () => {
   const [merchantData, setMerchantData] = useState([]);
@@ -66,6 +67,7 @@ const List = () => {
         title="Merchant"
         breadcrumb={breadcrumbs}
         path="/ui-components/merchant/new-merchant"
+        icon={<IconBuildingStore />}
       >
         <DataTableComponent data={merchantData} />
       </BaseCard>

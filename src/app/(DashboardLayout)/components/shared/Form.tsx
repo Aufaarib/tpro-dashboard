@@ -11,6 +11,7 @@ type Props = {
   onPost?: any;
   onCancel?: any;
   children?: React.ReactNode;
+  icon?: any;
 };
 
 const Form = ({
@@ -20,6 +21,7 @@ const Form = ({
   formTitle,
   onPost,
   onCancel,
+  icon,
 }: Props) => {
   const breadcrumbs = [
     <Link
@@ -48,11 +50,7 @@ const Form = ({
   ];
   return (
     <>
-      <ContentCard
-        icon={<IconBuildingStore />}
-        title={title}
-        breadcrumb={breadcrumbs}
-      >
+      <ContentCard icon={icon} title={title} breadcrumb={breadcrumbs}>
         <Box
           sx={{
             display: "flex",

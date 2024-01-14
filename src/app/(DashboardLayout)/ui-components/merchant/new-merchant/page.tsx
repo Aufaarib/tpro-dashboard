@@ -6,8 +6,9 @@ import {
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
 import { Box, Grid } from "@mui/material";
+import { IconBuildingStore } from "@tabler/icons-react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const NewMerchant = () => {
@@ -17,6 +18,11 @@ const NewMerchant = () => {
   const [parent, setParent] = useState("");
   const [description, setDescription] = useState("");
   const [level, setLevel] = useState("");
+  const router = useRouter();
+
+  const onCancel = () => {
+    router.replace("/ui-components/merchant");
+  };
 
   const postMerchant = () => {
     axios
@@ -59,6 +65,8 @@ const NewMerchant = () => {
             formTitle="New Merchant Form"
             title="New Merchant"
             onPost={postMerchant}
+            onCancel={() => onCancel()}
+            icon={<IconBuildingStore />}
           >
             <TextFields
               onChange={(e: any) => setName(e.target.value)}

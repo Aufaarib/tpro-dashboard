@@ -4,6 +4,7 @@ import BaseCard from "../shared/ContentCard";
 import DataTableComponent from "./DataTable";
 import { useAppContext } from "../shared/Context";
 import { Link, Typography } from "@mui/material";
+import { IconCreditCard } from "@tabler/icons-react";
 
 const List = () => {
   const [transactionsData, setTransactionsData] = useState([]);
@@ -62,6 +63,7 @@ const List = () => {
         title="Transactions"
         breadcrumb={breadcrumbs}
         path="/ui-components/product/new-product"
+        icon={<IconCreditCard />}
       >
         <DataTableComponent data={transactionsData} />
       </BaseCard>

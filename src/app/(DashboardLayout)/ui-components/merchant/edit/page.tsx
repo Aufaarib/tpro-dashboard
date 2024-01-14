@@ -6,8 +6,9 @@ import {
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
 import { Box, Grid } from "@mui/material";
+import { IconBuildingStore } from "@tabler/icons-react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type dropdown = {
@@ -22,6 +23,7 @@ const EditMerchant = () => {
   const [parent, setParent] = useState("");
   const [level, setLevel] = useState("");
   const [description, setDescription] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     setName(`${localStorage.getItem("Name")}`);
@@ -65,6 +67,10 @@ const EditMerchant = () => {
     value: c.id,
   }));
 
+  const onCancel = () => {
+    router.replace("/ui-components/merchant");
+  };
+
   return (
     <>
       <Grid container spacing={0}>
@@ -74,6 +80,8 @@ const EditMerchant = () => {
             formTitle="Edit Merchant Form"
             title="Edit Merchant"
             onPost={editMerchant}
+            onCancel={() => onCancel()}
+            icon={<IconBuildingStore />}
           >
             <TextFields
               onChange={(e: any) => setName(e.target.value)}

@@ -4,6 +4,7 @@ import { useAppContext } from "../shared/Context";
 import DataTableComponent from "./DataTable";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { IconBuildingStore, IconShoppingBag } from "@tabler/icons-react";
 
 const List = () => {
   const [productData, setProductData] = useState([]);
@@ -67,6 +68,7 @@ const List = () => {
         title="Product"
         breadcrumb={breadcrumbs}
         path="/ui-components/product/new-product"
+        icon={<IconShoppingBag />}
       >
         <DataTableComponent data={productData} />
       </BaseCard>
