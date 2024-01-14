@@ -21,11 +21,6 @@ const List = () => {
       })
       .then((res) => {
         setMerchantData(res.data.body);
-        // const isRejectedPresent: boolean = res.data.body.some(
-        //   (obj: any) => obj.status === "rejected" || obj.status === "waiting"
-        // );
-        // // console.log(isRejectedPresent);
-        // setIsUnapprovedDetonator(isRejectedPresent);
       })
       .catch((error) => {});
   };

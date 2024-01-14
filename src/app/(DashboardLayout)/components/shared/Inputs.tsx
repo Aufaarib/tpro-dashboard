@@ -99,7 +99,7 @@ export const Dropdown = ({
         value={value}
       >
         {options?.map((data: any) => (
-          <MenuItem value={data.id}>{data.fullname}</MenuItem>
+          <MenuItem value={data.value}>{data.label}</MenuItem>
         ))}
       </Select>
     </Box>

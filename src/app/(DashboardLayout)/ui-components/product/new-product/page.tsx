@@ -5,8 +5,9 @@ import {
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
 import { Grid } from "@mui/material";
+import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   id: number;
@@ -21,33 +22,75 @@ type Props = {
 
 const NewProduct = () => {
   const searchParams = useSearchParams();
-  const [isOpen, setIsOpen] = useState(false);
-  const [ids, setId] = useState<number>(0);
-  const [status, setStatus] = useState("");
+  const [description, setDescription] = useState("");
+  const [merchant_id, setMerchantId] = useState<number>(0);
+  const [product_code, setProductCode] = useState("");
   const [name, setName] = useState("");
-  const [note, setNote] = useState("");
+  const [price, setPrice] = useState("");
+  const [type, setType] = useState("");
+  const [merchantData, setMerchantData] = useState([]);
 
-  // useEffect(() => {
-  //   getDetonatorDetail();
-  // }, []);
+  const getMerchant = () => {
+    axios
+      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
+        },
+      })
+      .then((res) => {
+        setMerchantData(res.data.body);
+      })
+      .catch((error) => {});
+  };
 
-  // const getDetonatorDetail = () => {
-  //   axios
-  //     .get(
-  //       process.env.NEXT_PUBLIC_BASE +
-  //         `/merchant-product/fetch/${searchParams.get("id")}`,
-  //       {
-  //         headers: { authorization: `Bearer ${localStorage.getItem("TOKEN")}` },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       setData(res.data.body);
-  //     })
-  //     .catch((error) => {});
-  // };
+  const newProduct = () => {
+    axios
+      .post(
+        process.env.NEXT_PUBLIC_BASE + `/ps/v1/products`,
+        {
+          merchant_id,
+          product_code,
+          name,
+          description,
+          type,
+          price: parseInt(price),
+        },
+        { headers: { authorization: localStorage.getItem("TOKEN") } }
+      )
+      .then((res) => {})
+      .catch((error) => {});
+  };
 
-  console.log(name);
-  console.log(note);
+  useEffect(() => {
+    getMerchant();
+  }, []);
+
+  const prices = [
+    {
+      value: 1000,
+      label: 1000,
+    },
+    {
+      value: 2000,
+      label: 2000,
+    },
+  ];
+
+  const types = [
+    {
+      value: "pulsa",
+      label: "Pulsa",
+    },
+    {
+      value: "kuota",
+      label: "Kuota",
+    },
+  ];
+
+  const merchantOptions = merchantData.map((c: any) => ({
+    label: `${c.name}`,
+    value: c.merchant_id,
+  }));
 
   return (
     <>
@@ -57,38 +100,45 @@ const NewProduct = () => {
             title="New Product"
             formTitle="New Product Form"
             detailInformation="Please enter Code, Name, Merchant, Price, Type and Description"
+            onPost={newProduct}
           >
             <TextFields
-              onChange={(e: any) => setName(e.target.value)}
+              onChange={(e: any) => setProductCode(e.target.value)}
               label="Code"
               required={true}
+              value={product_code}
             />
             <TextFields
               onChange={(e: any) => setName(e.target.value)}
               label="Name"
               required={true}
+              value={name}
             />
             <Dropdown
-              onChange={(e: any) => setNote(e.target.value)}
+              onChange={(e: any) => setMerchantId(e.target.value)}
               label="Merchant"
               required={true}
-              value={ids}
+              value={merchant_id}
+              options={merchantOptions}
             />
             <Dropdown
-              onChange={(e: any) => setNote(e.target.value)}
+              onChange={(e: any) => setPrice(e.target.value)}
               label="Price"
               required={true}
-              value={ids}
+              value={price}
+              options={prices}
             />
             <Dropdown
-              onChange={(e: any) => setNote(e.target.value)}
+              onChange={(e: any) => setType(e.target.value)}
               label="Type"
               required={true}
-              value={ids}
+              value={type}
+              options={types}
             />
             <TextFields
+              onChange={(e: any) => setDescription(e.target.value)}
               label="Description"
-              onChange={(e: any) => setName(e.target.value)}
+              value={description}
               // required={true}
             />
           </Form>

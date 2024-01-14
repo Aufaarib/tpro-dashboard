@@ -36,14 +36,19 @@ const NewMerchant = () => {
 
   const levels = [
     {
-      id: 1,
-      fullname: 1,
+      value: 1,
+      label: 1,
     },
     {
-      id: 2,
-      fullname: 2,
+      value: 2,
+      label: 2,
     },
   ];
+
+  const usersOptions = usersData.map((c: any) => ({
+    label: `${c.fullname}`,
+    value: c.id,
+  }));
 
   return (
     <>
@@ -65,7 +70,7 @@ const NewMerchant = () => {
               label="Parent"
               required={true}
               value={parent}
-              options={usersData}
+              options={usersOptions}
             />
             <Dropdown
               onChange={(e: any) => setLevel(e.target.value)}

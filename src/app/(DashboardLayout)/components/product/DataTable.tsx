@@ -7,14 +7,16 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import CustomStylesTable from "../shared/CustomStylesTable";
 import DataTables from "../shared/DataTables";
 import { KeyboardArrowDown } from "@mui/icons-material";
+import { toInteger } from "lodash";
 
 interface Data {
   id: number;
+  merchant_id: number;
   product_code: string;
   name: string;
   description: string;
   type: number;
-  price: string;
+  price: number;
 }
 
 interface Props {
@@ -53,7 +55,13 @@ const columns: TableColumn<Data>[] = [
   {
     name: "Price",
     cell: (row: Data) => (
-      <div>Rp {row.price.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</div>
+      <div>
+        {new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(row.price)}
+      </div>
     ),
     // sortable: true,
   },
@@ -65,7 +73,13 @@ const columns: TableColumn<Data>[] = [
           href={{
             pathname: "/ui-components/product/edit",
             query: {
-              id: row.id,
+              product_id: row.id,
+              merchant_id: row.merchant_id,
+              product_code: row.product_code,
+              product_name: row.name,
+              description: row.description,
+              type: row.type,
+              price: toInteger(row.price),
             },
           }}
         >
