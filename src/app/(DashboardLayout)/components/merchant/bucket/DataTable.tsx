@@ -155,66 +155,50 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
             onClose={handleClose}
             TransitionComponent={Fade}
           >
-            <MenuItem>
-              <Link
-                href={{
-                  pathname: "/ui-components/merchant/bucket/edit",
-                  query: {
-                    id: row.merchant_id,
-                  },
-                }}
-              >
-                {/* <Button
+            <Link
+              href={{
+                pathname: "/ui-components/merchant/edit",
+                query: {
+                  merchant_id: row.merchant_id,
+                  name: row.name,
+                },
+              }}
+            >
+              <MenuItem
                 sx={{
-                  border: "1.2px solid #191C28",
                   color: "black",
-                  backgroundColor: "white",
                   fontSize: "14px",
                   fontWeight: 400,
-                  width: "115px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  paddingX: "15px",
                   ":hover": {
+                    color: "white",
                     backgroundColor: "#191C28",
                   },
                 }}
-                >
-                </Button> */}
+              >
                 <IconPencil />
                 Edit
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link
-                href={{
-                  pathname: "/ui-components/merchant/bucket/topup",
-                  query: {
-                    id: row.merchant_id,
-                  },
-                }}
-              >
-                {/* <Button
+              </MenuItem>
+            </Link>
+            <Link
+              href={{
+                pathname: "/ui-components/merchant/bucket",
+              }}
+            >
+              <MenuItem
                 sx={{
-                  border: "1.2px solid #191C28",
                   color: "black",
-                  backgroundColor: "white",
                   fontSize: "14px",
                   fontWeight: 400,
-                  width: "115px",
-                  height: "32px",
-                  borderRadius: "8px",
-                  paddingX: "15px",
                   ":hover": {
+                    color: "white",
                     backgroundColor: "#191C28",
                   },
                 }}
-                >
-                </Button> */}
-                <IconPencil />
-                Topup
-              </Link>
-            </MenuItem>
+              >
+                <IconEye />
+                View Bucket
+              </MenuItem>
+            </Link>
           </Menu>
         </div>
       ),

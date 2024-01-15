@@ -5,23 +5,30 @@ import { useEffect, useState } from "react";
 import ContentCard from "../../shared/ContentCard";
 import { useAppContext } from "../../shared/Context";
 import DataTableComponent from "./DataTable";
+import { IconBucket } from "@tabler/icons-react";
 
 const List = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
     getBucket();
   }, []);
 
+  console.log(data);
+
   const getBucket = () => {
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
-        headers: {
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      })
+      .get(
+        process.env.NEXT_PUBLIC_BASE +
+          `/ms/v1/merchants/00037716-482a-4d2e-aa2a-b648cd5f7afb`,
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
+        }
+      )
       .then((res) => {
-        setData(res.data.body);
+        setData(res.data.body.bucket);
       })
       .catch((error) => {});
   };
@@ -37,23 +44,12 @@ const List = () => {
       key="1"
       color="inherit"
       fontSize="13px"
-      href="/"
-      onClick={handleClick}
+      href="/ui-components/merchant"
     >
-      MUI
-    </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      fontSize="13px"
-      href="/material-ui/getting-started/installation/"
-      onClick={handleClick}
-    >
-      Core
+      Merchants
     </Link>,
     <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
-      Breadcrumb
+      Buckets
     </Typography>,
   ];
 
@@ -63,8 +59,9 @@ const List = () => {
         title="Bucket"
         breadcrumb={breadcrumbs}
         path="/ui-components/merchant/bucket/new-bucket"
+        icon={<IconBucket />}
       >
-        <DataTableComponent data={data} />
+        {/* <DataTableComponent data={data} /> */}
       </ContentCard>
     </>
   );

@@ -1,8 +1,9 @@
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { IconBuildingStore } from "@tabler/icons-react";
 import ContentCard from "./ContentCard";
 import { Dropdown, TextFields } from "./Inputs";
 import React from "react";
+import Link from "next/link";
 
 type Props = {
   detailInformation?: any;
@@ -12,6 +13,7 @@ type Props = {
   onCancel?: any;
   children?: React.ReactNode;
   icon?: any;
+  breadcrumbs?: any;
 };
 
 const Form = ({
@@ -22,32 +24,8 @@ const Form = ({
   onPost,
   onCancel,
   icon,
+  breadcrumbs,
 }: Props) => {
-  const breadcrumbs = [
-    <Link
-      underline="hover"
-      key="1"
-      color="inherit"
-      fontSize="13px"
-      href="/"
-      // onClick={handleClick}
-    >
-      MUI
-    </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      fontSize="13px"
-      href="/material-ui/getting-started/installation/"
-      // onClick={handleClick}
-    >
-      Core
-    </Link>,
-    <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
-      Breadcrumb
-    </Typography>,
-  ];
   return (
     <>
       <ContentCard icon={icon} title={title} breadcrumb={breadcrumbs}>

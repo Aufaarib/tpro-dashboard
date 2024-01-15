@@ -32,28 +32,8 @@ const List = () => {
   }
 
   const breadcrumbs = [
-    <Link
-      underline="hover"
-      key="1"
-      color="inherit"
-      fontSize="13px"
-      href="/"
-      onClick={handleClick}
-    >
-      MUI
-    </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      fontSize="13px"
-      href="/material-ui/getting-started/installation/"
-      onClick={handleClick}
-    >
-      Core
-    </Link>,
     <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
-      Breadcrumb
+      Transactions
     </Typography>,
   ];
 
@@ -62,7 +42,7 @@ const List = () => {
       <BaseCard
         title="Transactions"
         breadcrumb={breadcrumbs}
-        path="/ui-components/product/new-product"
+        // path="/ui-components/transactions"
         icon={<IconCreditCard />}
       >
         <DataTableComponent data={transactionsData} />

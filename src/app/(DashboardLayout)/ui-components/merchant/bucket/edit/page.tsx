@@ -5,6 +5,7 @@ import {
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
 import { Box, Grid } from "@mui/material";
+import { IconBucket } from "@tabler/icons-react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -44,6 +45,7 @@ const EditBuck = () => {
             detailInformation="Edit Bucket Name and Description"
             formTitle="Edit Bucket Form"
             title="Edit Bucket"
+            icon={<IconBucket />}
           >
             <TextFields
               onChange={(e: any) => setName(e.target.value)}

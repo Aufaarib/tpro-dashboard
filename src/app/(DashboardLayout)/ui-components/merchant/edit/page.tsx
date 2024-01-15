@@ -5,7 +5,7 @@ import {
   Dropdown,
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Link, Typography } from "@mui/material";
 import { IconBuildingStore } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,7 +32,9 @@ const EditMerchant = () => {
     setLevel(`${localStorage.getItem("Level")}`);
   }, []);
 
-  console.log(parent);
+  console.log(searchParams.get("merchant_id"));
+  console.log(searchParams.get("name"));
+  console.log(name);
 
   const editMerchant = () => {
     axios
@@ -71,6 +73,21 @@ const EditMerchant = () => {
     router.replace("/ui-components/merchant");
   };
 
+  const breadcrumbs = [
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      fontSize="13px"
+      href="/ui-components/merchant"
+    >
+      Merchants
+    </Link>,
+    <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
+      Edit Merchant
+    </Typography>,
+  ];
+
   return (
     <>
       <Grid container spacing={0}>
@@ -82,6 +99,7 @@ const EditMerchant = () => {
             onPost={editMerchant}
             onCancel={() => onCancel()}
             icon={<IconBuildingStore />}
+            breadcrumbs={breadcrumbs}
           >
             <TextFields
               onChange={(e: any) => setName(e.target.value)}

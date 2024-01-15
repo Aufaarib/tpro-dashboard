@@ -4,7 +4,7 @@ import {
   Dropdown,
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
-import { Grid } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { IconBuildingStore, IconShoppingBag } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -98,6 +98,21 @@ const NewProduct = () => {
     router.replace("/ui-components/product");
   };
 
+  const breadcrumbs = [
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      fontSize="13px"
+      href="/ui-components/product"
+    >
+      Products
+    </Link>,
+    <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
+      New Product
+    </Typography>,
+  ];
+
   return (
     <>
       <Grid container spacing={0}>
@@ -109,6 +124,7 @@ const NewProduct = () => {
             onPost={newProduct}
             onCancel={() => onCancel()}
             icon={<IconShoppingBag />}
+            breadcrumbs={breadcrumbs}
           >
             <TextFields
               onChange={(e: any) => setProductCode(e.target.value)}

@@ -4,15 +4,21 @@ import {
   Dropdown,
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Link, Typography } from "@mui/material";
+import { IconBucket } from "@tabler/icons-react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const NewBucket = () => {
   const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
+  const router = useRouter();
+
+  const onCancel = () => {
+    router.replace("/ui-components/merchant/bucket");
+  };
 
   useEffect(() => {
     getMerchantDetail();
@@ -36,6 +42,30 @@ const NewBucket = () => {
   console.log(parent);
   console.log(name);
 
+  const breadcrumbs = [
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      fontSize="13px"
+      href="/ui-components/merchant"
+    >
+      Merchants
+    </Link>,
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      fontSize="13px"
+      href="/ui-components/merchant/bucket"
+    >
+      Buckets
+    </Link>,
+    <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
+      New Bucket
+    </Typography>,
+  ];
+
   return (
     <>
       <Grid container spacing={0}>
@@ -44,6 +74,9 @@ const NewBucket = () => {
             detailInformation="Please enter Bucket Name and Description"
             formTitle="New Bucket Form"
             title="New Bucket"
+            icon={<IconBucket />}
+            breadcrumbs={breadcrumbs}
+            onCancel={() => onCancel()}
           >
             <TextFields
               onChange={(e: any) => setName(e.target.value)}

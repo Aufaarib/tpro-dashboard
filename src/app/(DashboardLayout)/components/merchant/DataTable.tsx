@@ -138,8 +138,8 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
     },
     {
       name: "Action",
-      cell: (row: Data, index: number) => (
-        <div>
+      cell: (row: Data) => (
+        <>
           <Button
             sx={{
               color: "white",
@@ -181,6 +181,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
                 pathname: "/ui-components/merchant/edit",
                 query: {
                   merchant_id: row.merchant_id,
+                  name: row.name,
                 },
               }}
             >
@@ -220,7 +221,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
               </MenuItem>
             </Link>
           </Menu>
-        </div>
+        </>
       ),
       // sortable: true,
     },
