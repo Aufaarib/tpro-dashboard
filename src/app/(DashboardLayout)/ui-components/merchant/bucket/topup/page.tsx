@@ -78,26 +78,22 @@ const BucketTopup = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid item xs={12} lg={12}>
-          <Form
-            detailInformation="Please enter Amount"
-            formTitle="Topup Bucket Form"
-            title="Topup Bucket"
-            icon={<IconBucket />}
-            breadcrumbs={breadcrumbs}
-            onPost={() => topupBucket()}
-            onCancel={() => onCancel()}
-          >
-            <TextFields
-              onChange={handleInputChange}
-              label="Amount"
-              required={true}
-              value={amount}
-            />
-          </Form>
-        </Grid>
-      </Grid>
+      <Form
+        detailInformation="Please enter Amount"
+        formTitle="Topup Bucket Form"
+        title="Topup Bucket"
+        icon={<IconBucket />}
+        breadcrumbs={breadcrumbs}
+        onPost={() => topupBucket()}
+        onCancel={() => onCancel()}
+      >
+        <TextFields
+          onChange={handleInputChange}
+          label="Amount"
+          required={true}
+          value={amount}
+        />
+      </Form>
     </>
   );
 };

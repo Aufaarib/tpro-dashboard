@@ -8,21 +8,30 @@ import { IconBuildingStore, IconShoppingBag } from "@tabler/icons-react";
 
 const List = () => {
   const [productData, setProductData] = useState([]);
+  const [productMeta, setProductMeta] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const getProduct = () => {
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    getProduct(value);
+  };
+
+  console.log(productMeta);
+
+  const getProduct = (value?: any) => {
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/ps/v1/products", {
-        headers: {
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      })
+      .get(
+        process.env.NEXT_PUBLIC_BASE +
+          `/ps/v1/products?page=${value}&per_page=1`,
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
+        }
+      )
       .then((res) => {
         setProductData(res.data.body);
-        // const isRejectedPresent: boolean = res.data.body.some(
-        //   (obj: any) => obj.status === "rejected" || obj.status === "waiting"
-        // );
-        // // console.log(isRejectedPresent);
-        // setIsUnapprovedProduct(isRejectedPresent);
+        setProductMeta(res.data.meta);
       })
       .catch((error) => {});
   };
@@ -50,7 +59,12 @@ const List = () => {
         path="/ui-components/product/new-product"
         icon={<IconShoppingBag />}
       >
-        <DataTableComponent data={productData} />
+        <DataTableComponent
+          onChange={handleChange}
+          page={page}
+          meta={productMeta}
+          data={productData}
+        />
       </BaseCard>
     </>
   );

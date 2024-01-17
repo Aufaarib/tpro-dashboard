@@ -4,13 +4,7 @@ import PageContainer from "@/app/(DashboardLayout)/components/container/PageCont
 import MerchantData from "@/app/(DashboardLayout)/components/merchant/List";
 
 const MerchantManagement = () => {
-  return (
-    <Grid container spacing={0}>
-      <Grid item xs={12} lg={12}>
-        <MerchantData />
-      </Grid>
-    </Grid>
-  );
+  return <MerchantData />;
 };
 
 export default MerchantManagement;

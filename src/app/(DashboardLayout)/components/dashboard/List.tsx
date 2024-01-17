@@ -24,13 +24,17 @@ const List = () => {
 
   const getMerchant = () => {
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
-        headers: {
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      })
+      .get(
+        process.env.NEXT_PUBLIC_BASE + `/ms/v1/merchants?page=1&per_page=5`,
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
+        }
+      )
       .then((res) => {
         setMerchantData(res.data.body);
+        // setMerchantMeta(res.data.meta);
       })
       .catch((error) => {});
   };

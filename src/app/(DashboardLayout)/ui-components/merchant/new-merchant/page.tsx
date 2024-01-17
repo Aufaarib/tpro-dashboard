@@ -91,44 +91,40 @@ const NewMerchant = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid item xs={12} lg={12}>
-          <Form
-            detailInformation="Please enter Merchant Name, Description, Level and Parent"
-            formTitle="New Merchant Form"
-            title="New Merchant"
-            onPost={postMerchant}
-            onCancel={() => onCancel()}
-            icon={<IconBuildingStore />}
-            breadcrumbs={breadcrumbs}
-          >
-            <TextFields
-              onChange={(e: any) => setName(e.target.value)}
-              label="Name"
-              required={true}
-            />
-            <Dropdown
-              onChange={(e: any) => setParent(e.target.value)}
-              label="Parent"
-              required={true}
-              value={parent}
-              options={usersOptions}
-            />
-            <Dropdown
-              onChange={(e: any) => setLevel(e.target.value)}
-              label="Level"
-              required={true}
-              value={level}
-              options={levels}
-            />
-            <TextFields
-              label="Description"
-              onChange={(e: any) => setDescription(e.target.value)}
-              // required={true}
-            />
-          </Form>
-        </Grid>
-      </Grid>
+      <Form
+        detailInformation="Please enter Merchant Name, Description, Level and Parent"
+        formTitle="New Merchant Form"
+        title="New Merchant"
+        onPost={postMerchant}
+        onCancel={() => onCancel()}
+        icon={<IconBuildingStore />}
+        breadcrumbs={breadcrumbs}
+      >
+        <TextFields
+          onChange={(e: any) => setName(e.target.value)}
+          label="Name"
+          required={true}
+        />
+        <Dropdown
+          onChange={(e: any) => setParent(e.target.value)}
+          label="Parent"
+          required={true}
+          value={parent}
+          options={usersOptions}
+        />
+        <Dropdown
+          onChange={(e: any) => setLevel(e.target.value)}
+          label="Level"
+          required={true}
+          value={level}
+          options={levels}
+        />
+        <TextFields
+          label="Description"
+          onChange={(e: any) => setDescription(e.target.value)}
+          // required={true}
+        />
+      </Form>
     </>
   );
 };

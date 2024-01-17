@@ -20,8 +20,18 @@ interface Data {
   merchant: { name: string };
 }
 
+interface Meta {
+  page: number;
+  per_page: number;
+  page_count: number;
+  total: number;
+}
+
 interface Props {
   data: Data[];
+  meta: Meta[];
+  onChange: any;
+  page: any;
 }
 
 const columns: TableColumn<Data>[] = [
@@ -38,7 +48,7 @@ const columns: TableColumn<Data>[] = [
     name: "Name",
     cell: (row: Data) => <div>{row.merchant.name}</div>,
     // sortable: true,
-    width: "auto",
+    width: "150px",
   },
   {
     name: "Amount",
@@ -52,31 +62,31 @@ const columns: TableColumn<Data>[] = [
       </div>
     ),
     // sortable: true,
-    width: "150px",
+    width: "120px",
   },
   {
     name: "Msisdn",
     cell: (row: Data) => <div>{row.msisdn}</div>,
     // sortable: true,
-    width: "auto",
+    width: "170px",
   },
   {
     name: "Serial Number",
     cell: (row: Data) => <div>{row.serial_number}</div>,
     // sortable: true,
-    width: "auto",
+    width: "240px",
   },
   {
     name: "Denomination",
     cell: (row: Data) => <div>{row.denomination}</div>,
     // sortable: true,
-    width: "auto",
+    width: "150px",
   },
   {
     name: "Type",
     cell: (row: Data) => <div>{row.type}</div>,
     // sortable: true,
-    width: "90px",
+    // width: "150px",
   },
   {
     name: "Status",
@@ -85,12 +95,12 @@ const columns: TableColumn<Data>[] = [
     width: "110px",
   },
   {
-    name: "Created At",
+    name: "Transaction Date",
     cell: (row: Data) => (
       <div>{moment(row.created_at).format("YYYY-MM-DD")}</div>
     ),
     // sortable: true,
-    width: "auto",
+    width: "180px",
   },
   // {
   //   name: "Action",
@@ -131,7 +141,12 @@ const columns: TableColumn<Data>[] = [
   // Add more columns as needed
 ];
 
-const DataTableComponent: React.FC<Props> = ({ data }) => {
+const DataTableComponent: React.FC<Props> = ({
+  data,
+  meta,
+  page,
+  onChange,
+}) => {
   const [filterText, setFilterText] = useState<string>("unapproved");
   const [searchBy, setSearchBy] = useState<string>("name");
   const [searchText, setSearchText] = useState<string>("");
@@ -194,11 +209,13 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
         value={filterText}
         searchOption={searchOption}
         valueSearchBy={searchBy}
-        onChange={handleChange}
+        onChange={onChange}
         onChangeSearch={handleChangeSearch}
         onChangeSearchBy={handleChangeSearchBy}
         columns={columns}
         data={data}
+        meta={meta}
+        page={page}
         pagination={true}
       />
     </>

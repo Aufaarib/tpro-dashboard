@@ -1,8 +1,11 @@
 const CustomStylesTable = {
   table: {
     style: {
-      width: "auto", // set the width of the table wrapper
+      width: "100%",
+      // maxWidth: "160vh", // set the width of the table wrapper
       backgroundColor: "transparent",
+      justifyContent: "center",
+      overflow: "auto",
     },
   },
   cells: {
@@ -43,7 +46,7 @@ const CustomStylesTable = {
   headCells: {
     style: {
       paddingLeft: "22px", // override the cell padding for head cells
-      // paddingRight: "10px",
+      paddingRight: "10px",
       justifyContent: "left",
       color: "#000",
       fontSize: "14px",
@@ -60,7 +63,7 @@ const CustomStylesTable = {
     pageButtonsStyle: {
       borderRadius: "5px",
       border: "1px solid #ccc",
-      margin: "2px",
+      // margin: "2px",
       color: "#007BFF",
       backgroundColor: "white",
     },

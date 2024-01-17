@@ -124,59 +124,55 @@ const EditProduct = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid item xs={12} lg={12}>
-          <Form
-            title="Edit Product"
-            formTitle="Edit Product Form"
-            detailInformation="Edit Code, Name, Merchant, Price, Type and Description"
-            onPost={editProduct}
-            onCancel={() => onCancel()}
-            icon={<IconShoppingBag />}
-            breadcrumbs={breadcrumbs}
-          >
-            <TextFields
-              onChange={(e: any) => setProductCode(e.target.value)}
-              label="Code"
-              required={true}
-              value={product_code}
-            />
-            <TextFields
-              onChange={(e: any) => setName(e.target.value)}
-              label="Name"
-              required={true}
-              value={name}
-            />
-            <Dropdown
-              onChange={(e: any) => setMerchantId(e.target.value)}
-              label="Merchant"
-              required={true}
-              value={merchant_id}
-              options={merchantOptions}
-            />
-            <Dropdown
-              onChange={(e: any) => setPrice(e.target.value)}
-              label="Price"
-              required={true}
-              value={price}
-              options={prices}
-            />
-            <Dropdown
-              onChange={(e: any) => setType(e.target.value)}
-              label="Type"
-              required={true}
-              value={type}
-              options={types}
-            />
-            <TextFields
-              label="Description"
-              onChange={(e: any) => setDescription(e.target.value)}
-              value={description}
-              // required={true}
-            />
-          </Form>
-        </Grid>
-      </Grid>
+      <Form
+        title="Edit Product"
+        formTitle="Edit Product Form"
+        detailInformation="Edit Code, Name, Merchant, Price, Type and Description"
+        onPost={editProduct}
+        onCancel={() => onCancel()}
+        icon={<IconShoppingBag />}
+        breadcrumbs={breadcrumbs}
+      >
+        <TextFields
+          onChange={(e: any) => setProductCode(e.target.value)}
+          label="Code"
+          required={true}
+          value={product_code}
+        />
+        <TextFields
+          onChange={(e: any) => setName(e.target.value)}
+          label="Name"
+          required={true}
+          value={name}
+        />
+        <Dropdown
+          onChange={(e: any) => setMerchantId(e.target.value)}
+          label="Merchant"
+          required={true}
+          value={merchant_id}
+          options={merchantOptions}
+        />
+        <Dropdown
+          onChange={(e: any) => setPrice(e.target.value)}
+          label="Price"
+          required={true}
+          value={price}
+          options={prices}
+        />
+        <Dropdown
+          onChange={(e: any) => setType(e.target.value)}
+          label="Type"
+          required={true}
+          value={type}
+          options={types}
+        />
+        <TextFields
+          label="Description"
+          onChange={(e: any) => setDescription(e.target.value)}
+          value={description}
+          // required={true}
+        />
+      </Form>
     </>
   );
 };

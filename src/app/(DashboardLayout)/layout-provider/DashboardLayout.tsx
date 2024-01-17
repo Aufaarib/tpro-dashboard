@@ -19,6 +19,7 @@ const PageWrapper = styled("div")(() => ({
   paddingBottom: "20px",
   flexDirection: "column",
   zIndex: 1,
+  width: "100px",
 }));
 
 interface Props {
@@ -59,7 +60,7 @@ export default function DashboardLayout({
           sx={{
             paddingTop: "20px",
             paddingBottom: "100px",
-            maxWidth: "1200px",
+            maxWidth: "100%",
           }}
         >
           {/* ------------------------------------------- */}

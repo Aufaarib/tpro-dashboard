@@ -25,12 +25,26 @@ interface Data {
   level: number;
   bucket: { balance: number };
 }
+interface Meta {
+  page: number;
+  per_page: number;
+  page_count: number;
+  total: number;
+}
 
 interface Props {
   data: Data[];
+  meta: Meta[];
+  onChange: any;
+  page: any;
 }
 
-const DataTableComponent: React.FC<Props> = ({ data }) => {
+const DataTableComponent: React.FC<Props> = ({
+  data,
+  meta,
+  onChange,
+  page,
+}) => {
   const [filterText, setFilterText] = useState<string>("unapproved");
   const [searchBy, setSearchBy] = useState<string>("fullname");
   const [searchText, setSearchText] = useState<string>("");
@@ -238,11 +252,13 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
         value={filterText}
         searchOption={searchOption}
         valueSearchBy={searchBy}
-        onChange={handleChange}
+        onChange={onChange}
         onChangeSearch={handleChangeSearch}
         onChangeSearchBy={handleChangeSearchBy}
         columns={columns}
         data={data}
+        meta={meta}
+        page={page}
         pagination={true}
       />
     </>

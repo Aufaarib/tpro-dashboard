@@ -9,19 +9,30 @@ import { IconBuildingStore } from "@tabler/icons-react";
 
 const List = () => {
   const [merchantData, setMerchantData] = useState([]);
-  const { usersData } = useAppContext();
+  const [merchantMeta, setMerchantMeta] = useState([]);
+  const [page, setPage] = useState(1);
 
-  console.log(usersData);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    getMerchant(value);
+  };
 
-  const getMerchant = () => {
+  console.log(merchantMeta);
+
+  const getMerchant = (value?: any) => {
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
-        headers: {
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      })
+      .get(
+        process.env.NEXT_PUBLIC_BASE +
+          `/ms/v1/merchants?page=${value}&per_page=5`,
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
+        }
+      )
       .then((res) => {
         setMerchantData(res.data.body);
+        setMerchantMeta(res.data.meta);
       })
       .catch((error) => {});
   };
@@ -30,32 +41,7 @@ const List = () => {
     getMerchant();
   }, []);
 
-  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  }
-
   const breadcrumbs = [
-    // <Link
-    //   underline="hover"
-    //   key="1"
-    //   color="inherit"
-    //   fontSize="13px"
-    //   href="/"
-    //   onClick={handleClick}
-    // >
-    //   MUI
-    // </Link>,
-    // <Link
-    //   underline="hover"
-    //   key="2"
-    //   color="inherit"
-    //   fontSize="13px"
-    //   href="/material-ui/getting-started/installation/"
-    //   onClick={handleClick}
-    // >
-    //   Core
-    // </Link>,
     <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
       Merchants
     </Typography>,
@@ -69,7 +55,12 @@ const List = () => {
         path="/ui-components/merchant/new-merchant"
         icon={<IconBuildingStore />}
       >
-        <DataTableComponent data={merchantData} />
+        <DataTableComponent
+          onChange={handleChange}
+          page={page}
+          meta={merchantMeta}
+          data={merchantData}
+        />
       </BaseCard>
     </>
   );

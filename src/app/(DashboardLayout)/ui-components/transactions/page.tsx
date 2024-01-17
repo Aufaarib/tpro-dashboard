@@ -4,13 +4,7 @@ import TransactionsData from "@/app/(DashboardLayout)/components/transactions/Li
 import PageContainer from "../../components/container/PageContainer";
 
 const TransactionsManagement = () => {
-  return (
-    <Grid container spacing={0}>
-      <Grid item xs={12} lg={12}>
-        <TransactionsData />
-      </Grid>
-    </Grid>
-  );
+  return <TransactionsData />;
 };
 
 export default TransactionsManagement;

@@ -8,16 +8,30 @@ import { IconCreditCard } from "@tabler/icons-react";
 
 const List = () => {
   const [transactionsData, setTransactionsData] = useState([]);
+  const [transactionsMeta, seTransactionsMeta] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const getTransaction = () => {
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    getTransaction(value);
+  };
+
+  console.log(transactionsMeta);
+
+  const getTransaction = (value?: any) => {
     axios
-      .get(process.env.NEXT_PUBLIC_BASE + "/ts/v1/transaction", {
-        headers: {
-          authorization: localStorage.getItem("TOKEN"),
-        },
-      })
+      .get(
+        process.env.NEXT_PUBLIC_BASE +
+          `/ts/v1/transaction?page=${page}&per_page=1`,
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
+        }
+      )
       .then((res) => {
         setTransactionsData(res.data.body);
+        seTransactionsMeta(res.data.meta);
       })
       .catch((error) => {});
   };
@@ -25,11 +39,6 @@ const List = () => {
   useEffect(() => {
     getTransaction();
   }, []);
-
-  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  }
 
   const breadcrumbs = [
     <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
@@ -45,7 +54,12 @@ const List = () => {
         // path="/ui-components/transactions"
         icon={<IconCreditCard />}
       >
-        <DataTableComponent data={transactionsData} />
+        <DataTableComponent
+          onChange={handleChange}
+          page={page}
+          meta={transactionsMeta}
+          data={transactionsData}
+        />
       </BaseCard>
     </>
   );

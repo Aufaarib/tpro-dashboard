@@ -68,29 +68,25 @@ const NewBucket = () => {
 
   return (
     <>
-      <Grid container spacing={0}>
-        <Grid item xs={12} lg={12}>
-          <Form
-            detailInformation="Please enter Bucket Name and Description"
-            formTitle="New Bucket Form"
-            title="New Bucket"
-            icon={<IconBucket />}
-            breadcrumbs={breadcrumbs}
-            onCancel={() => onCancel()}
-          >
-            <TextFields
-              onChange={(e: any) => setName(e.target.value)}
-              label="Name"
-              required={true}
-            />
-            <TextFields
-              label="Description"
-              onChange={(e: any) => setName(e.target.value)}
-              // required={true}
-            />
-          </Form>
-        </Grid>
-      </Grid>
+      <Form
+        detailInformation="Please enter Bucket Name and Description"
+        formTitle="New Bucket Form"
+        title="New Bucket"
+        icon={<IconBucket />}
+        breadcrumbs={breadcrumbs}
+        onCancel={() => onCancel()}
+      >
+        <TextFields
+          onChange={(e: any) => setName(e.target.value)}
+          label="Name"
+          required={true}
+        />
+        <TextFields
+          label="Description"
+          onChange={(e: any) => setName(e.target.value)}
+          // required={true}
+        />
+      </Form>
     </>
   );
 };
