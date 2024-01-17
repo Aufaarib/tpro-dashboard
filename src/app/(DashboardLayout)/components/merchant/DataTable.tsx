@@ -18,7 +18,7 @@ import { IconEye, IconPencil } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 
 interface Data {
-  user_id: number;
+  parent_id: number;
   merchant_id: string;
   name: string;
   description: string;
@@ -42,14 +42,14 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
     event: React.MouseEvent<HTMLElement>,
     merchant_id: any,
     name: any,
-    user_id: any,
+    parent_id: any,
     level: any,
     description: any
   ) => {
     setAnchorEl(event.currentTarget);
     localStorage.setItem("Merchant_id", merchant_id);
     localStorage.setItem("Name", name);
-    localStorage.setItem("User_id", user_id);
+    localStorage.setItem("Parent_id", parent_id);
     localStorage.setItem("Level", level);
     localStorage.setItem("Description", description);
   };
@@ -160,7 +160,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
                 e,
                 row.merchant_id,
                 row.name,
-                row.user_id,
+                row.parent_id,
                 row.level,
                 row.description
               )

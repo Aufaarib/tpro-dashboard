@@ -1,22 +1,5 @@
 import { KeyboardArrowRight } from "@mui/icons-material";
-import {
-  Box,
-  Breadcrumbs,
-  Button,
-  Icon,
-  Stack,
-  StepIconProps,
-  Typography,
-} from "@mui/material";
-import {
-  IconAdCircle,
-  IconArrowBarRight,
-  IconArrowBigRightLine,
-  IconArrowRight,
-  IconArrowsRight,
-  IconBuildingStore,
-  IconPlus,
-} from "@tabler/icons-react";
+import { Box, Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
 
 type Props = {

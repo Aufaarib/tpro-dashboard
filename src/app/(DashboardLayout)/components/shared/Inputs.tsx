@@ -85,13 +85,11 @@ export const Dropdown = ({
       <Select
         sx={{
           width: "50%",
-          border: "1.2px solid #EBEBEB",
-          // backgroundColor: "#a3181d",
           borderRadius: "10px",
-          "& .MuiOutlinedInput-root": {
-            // color: "white",
-            "& fieldset": {
-              border: "none", // Remove the border
+          "& .MuiSelect-root": {
+            // styles for the root state
+            "&:focus": {
+              // styles for the root state when focused
             },
           },
         }}

@@ -7,6 +7,7 @@ import {
 import { Grid, Link, Typography } from "@mui/material";
 import { IconBuildingStore, IconShoppingBag } from "@tabler/icons-react";
 import axios from "axios";
+import { toInteger } from "lodash";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -55,7 +56,7 @@ const NewProduct = () => {
           name,
           description,
           type,
-          price: parseInt(price),
+          price: toInteger(price),
         },
         { headers: { authorization: localStorage.getItem("TOKEN") } }
       )

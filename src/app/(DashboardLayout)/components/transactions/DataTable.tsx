@@ -42,9 +42,17 @@ const columns: TableColumn<Data>[] = [
   },
   {
     name: "Amount",
-    cell: (row: Data) => <div>{row.amount}</div>,
+    cell: (row: Data) => (
+      <div>
+        {new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(row.amount)}
+      </div>
+    ),
     // sortable: true,
-    width: "100px",
+    width: "150px",
   },
   {
     name: "Msisdn",
@@ -78,7 +86,9 @@ const columns: TableColumn<Data>[] = [
   },
   {
     name: "Created At",
-    cell: (row: Data) => <div>{row.created_at}</div>,
+    cell: (row: Data) => (
+      <div>{moment(row.created_at).format("YYYY-MM-DD")}</div>
+    ),
     // sortable: true,
     width: "auto",
   },

@@ -7,20 +7,40 @@ import { useAppContext } from "../../shared/Context";
 import DataTableComponent from "./DataTable";
 import { IconBucket } from "@tabler/icons-react";
 
+interface Data {
+  merchant_id?: number;
+  bucket?: {
+    balance?: number;
+    name?: string;
+    description?: string;
+    level?: number;
+  };
+}
+
 const List = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState<Data>();
+
+  const datas = [
+    {
+      merchant_id: data?.merchant_id,
+      bucket: {
+        name: data?.bucket?.name,
+        balance: data?.bucket?.balance,
+        description: data?.bucket?.description,
+        level: data?.bucket?.level,
+      },
+    },
+  ];
 
   useEffect(() => {
     getBucket();
   }, []);
 
-  console.log(data);
-
   const getBucket = () => {
     axios
       .get(
         process.env.NEXT_PUBLIC_BASE +
-          `/ms/v1/merchants/00037716-482a-4d2e-aa2a-b648cd5f7afb`,
+          `/ms/v1/merchants/${localStorage.getItem("Merchant_id")}`,
         {
           headers: {
             authorization: localStorage.getItem("TOKEN"),
@@ -28,7 +48,7 @@ const List = () => {
         }
       )
       .then((res) => {
-        setData(res.data.body.bucket);
+        setData(res.data.body);
       })
       .catch((error) => {});
   };
@@ -58,10 +78,10 @@ const List = () => {
       <ContentCard
         title="Bucket"
         breadcrumb={breadcrumbs}
-        path="/ui-components/merchant/bucket/new-bucket"
+        // path="/ui-components/merchant/bucket/new-bucket"
         icon={<IconBucket />}
       >
-        {/* <DataTableComponent data={data} /> */}
+        <DataTableComponent data={datas} />
       </ContentCard>
     </>
   );

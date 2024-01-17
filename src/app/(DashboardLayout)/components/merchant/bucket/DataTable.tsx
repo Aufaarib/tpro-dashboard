@@ -19,15 +19,17 @@ import DataTables from "../../shared/DataTables";
 import axios from "axios";
 
 interface Data {
-  merchant_id: number;
-  name: string;
-  description: string;
-  level: number;
-  bucket: { balance: number };
+  merchant_id?: number;
+  bucket?: {
+    balance?: any;
+    name?: string;
+    description?: string;
+    level?: number;
+  };
 }
 
 interface Props {
-  data: Data[];
+  data?: Data[];
 }
 
 const DataTableComponent: React.FC<Props> = ({ data }) => {
@@ -37,9 +39,11 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const router = useRouter();
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -108,19 +112,27 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
     },
     {
       name: "Name",
-      cell: (row: Data) => <div>{row.name}</div>,
+      cell: (row: Data) => <div>{row.bucket?.name}</div>,
       // sortable: true,
       width: "auto",
     },
     {
       name: "Description",
-      cell: (row: Data) => <div>{row.description}</div>,
+      cell: (row: Data) => <div>{row.bucket?.description}</div>,
       // sortable: true,
       width: "300px",
     },
     {
       name: "Balance",
-      cell: (row: Data) => <div>{row.level}</div>,
+      cell: (row: Data) => (
+        <div>
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(row.bucket?.balance)}
+        </div>
+      ),
       // sortable: true,
       width: "auto",
     },
@@ -157,10 +169,10 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
           >
             <Link
               href={{
-                pathname: "/ui-components/merchant/edit",
+                // pathname: "/ui-components/merchant/edit",
                 query: {
                   merchant_id: row.merchant_id,
-                  name: row.name,
+                  name: row.bucket?.name,
                 },
               }}
             >
@@ -181,7 +193,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
             </Link>
             <Link
               href={{
-                pathname: "/ui-components/merchant/bucket",
+                pathname: "/ui-components/merchant/bucket/topup",
               }}
             >
               <MenuItem
@@ -196,7 +208,7 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
                 }}
               >
                 <IconEye />
-                View Bucket
+                Topup
               </MenuItem>
             </Link>
           </Menu>
@@ -214,15 +226,15 @@ const DataTableComponent: React.FC<Props> = ({ data }) => {
   return (
     <>
       <DataTables
-        value={filterText}
-        searchOption={searchOption}
-        valueSearchBy={searchBy}
-        onChange={handleChange}
-        onChangeSearch={handleChangeSearch}
-        onChangeSearchBy={handleChangeSearchBy}
+        // value={filterText}
+        // searchOption={searchOption}
+        // valueSearchBy={searchBy}
+        // onChange={handleChange}
+        // onChangeSearch={handleChangeSearch}
+        // onChangeSearchBy={handleChangeSearchBy}
         columns={columns}
         data={data}
-        pagination={true}
+        // pagination={true}
       />
     </>
   );

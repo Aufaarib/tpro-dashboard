@@ -19,6 +19,7 @@ type dropdown = {
 const EditMerchant = () => {
   const searchParams = useSearchParams();
   const { usersData } = useAppContext();
+  const [merchantData, setMerchantData] = useState([]);
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
   const [level, setLevel] = useState("");
@@ -28,13 +29,9 @@ const EditMerchant = () => {
   useEffect(() => {
     setName(`${localStorage.getItem("Name")}`);
     setDescription(`${localStorage.getItem("Description")}`);
-    setParent(`${localStorage.getItem("User_id")}`);
+    setParent(`${localStorage.getItem("Merchant_id")}`);
     setLevel(`${localStorage.getItem("Level")}`);
   }, []);
-
-  console.log(searchParams.get("merchant_id"));
-  console.log(searchParams.get("name"));
-  console.log(name);
 
   const editMerchant = () => {
     axios
@@ -53,6 +50,23 @@ const EditMerchant = () => {
       .catch((error) => {});
   };
 
+  const getMerchant = () => {
+    axios
+      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
+        },
+      })
+      .then((res) => {
+        setMerchantData(res.data.body);
+      })
+      .catch((error) => {});
+  };
+
+  useEffect(() => {
+    getMerchant();
+  }, []);
+
   const levels = [
     {
       value: 1,
@@ -64,9 +78,9 @@ const EditMerchant = () => {
     },
   ];
 
-  const usersOptions = usersData.map((c: any) => ({
-    label: `${c.fullname}`,
-    value: c.id,
+  const usersOptions = merchantData.map((c: any) => ({
+    label: `${c.name}`,
+    value: c.merchant_id,
   }));
 
   const onCancel = () => {

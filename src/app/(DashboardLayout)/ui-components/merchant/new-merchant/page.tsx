@@ -13,7 +13,8 @@ import { useEffect, useState } from "react";
 
 const NewMerchant = () => {
   const searchParams = useSearchParams();
-  const { usersData } = useAppContext();
+  // const { usersData } = useAppContext();
+  const [merchantData, setMerchantData] = useState([]);
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
   const [description, setDescription] = useState("");
@@ -31,7 +32,7 @@ const NewMerchant = () => {
         {
           name,
           description,
-          user_id: parent,
+          parent_id: parent,
           level,
         },
         { headers: { authorization: localStorage.getItem("TOKEN") } }
@@ -51,9 +52,26 @@ const NewMerchant = () => {
     },
   ];
 
-  const usersOptions = usersData.map((c: any) => ({
-    label: `${c.fullname}`,
-    value: c.id,
+  const getMerchant = () => {
+    axios
+      .get(process.env.NEXT_PUBLIC_BASE + "/ms/v1/merchants", {
+        headers: {
+          authorization: localStorage.getItem("TOKEN"),
+        },
+      })
+      .then((res) => {
+        setMerchantData(res.data.body);
+      })
+      .catch((error) => {});
+  };
+
+  useEffect(() => {
+    getMerchant();
+  }, []);
+
+  const usersOptions = merchantData.map((c: any) => ({
+    label: `${c.name}`,
+    value: c.merchant_id,
   }));
 
   const breadcrumbs = [

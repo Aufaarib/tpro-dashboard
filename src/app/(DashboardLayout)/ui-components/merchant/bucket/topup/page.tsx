@@ -4,28 +4,42 @@ import {
   Dropdown,
   TextFields,
 } from "@/app/(DashboardLayout)/components/shared/Inputs";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Link, Typography } from "@mui/material";
 import { IconBucket } from "@tabler/icons-react";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import { toInteger } from "lodash";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const BucketTopup = () => {
   const searchParams = useSearchParams();
   const [name, setName] = useState("");
-  const [parent, setParent] = useState("");
+  const [amount, setAmount] = useState("");
+  const router = useRouter();
 
-  useEffect(() => {
-    getMerchantDetail();
-  }, []);
+  const handleInputChange = (event: any) => {
+    let inputVal = event.target.value;
+    inputVal = inputVal.replace(/\D/g, ""); // Remove all non-numeric characters
+    inputVal = inputVal.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Add dots every 3 digits
+    // const value = parseInt(inputVal);
+    setAmount(inputVal);
+  };
 
-  const getMerchantDetail = () => {
+  const topupBucket = () => {
+    const amounts = toInteger(amount.replace(/\./g, ""));
     axios
-      .get(
+      .put(
         process.env.NEXT_PUBLIC_BASE +
-          `/merchant/fetch/${searchParams.get("id")}`,
+          `/ms/v1/merchants/${localStorage.getItem(
+            "Merchant_id"
+          )}/bucket/topup`,
         {
-          headers: { authorization: `Bearer ${localStorage.getItem("TOKEN")}` },
+          amount: amounts,
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
         }
       )
       .then((res) => {
@@ -34,8 +48,33 @@ const BucketTopup = () => {
       .catch((error) => {});
   };
 
-  console.log(parent);
-  console.log(name);
+  const breadcrumbs = [
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      fontSize="13px"
+      href="/ui-components/merchant"
+    >
+      Merchants
+    </Link>,
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      fontSize="13px"
+      href="/ui-components/merchant/bucket"
+    >
+      Bucket
+    </Link>,
+    <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
+      Topup Bucket
+    </Typography>,
+  ];
+
+  const onCancel = () => {
+    router.replace("/ui-components/merchant/bucket");
+  };
 
   return (
     <>
@@ -46,11 +85,15 @@ const BucketTopup = () => {
             formTitle="Topup Bucket Form"
             title="Topup Bucket"
             icon={<IconBucket />}
+            breadcrumbs={breadcrumbs}
+            onPost={() => topupBucket()}
+            onCancel={() => onCancel()}
           >
             <TextFields
-              onChange={(e: any) => setName(e.target.value)}
+              onChange={handleInputChange}
               label="Amount"
               required={true}
+              value={amount}
             />
           </Form>
         </Grid>
