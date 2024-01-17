@@ -41,9 +41,10 @@ const ContentCard = ({
           alignItems: "center",
           backgroundColor: "#FFF",
           justifyContent: "space-between",
-          borderBottom: "1px solid #EBEBEB",
+          border: "1px solid #EBEBEB",
           padding: "10px",
-          paddingX: "40px",
+          paddingX: "20px",
+          borderRadius: "10px",
         }}
       >
         <Box

@@ -22,7 +22,7 @@ const List = () => {
     axios
       .get(
         process.env.NEXT_PUBLIC_BASE +
-          `/ts/v1/transaction?page=${page}&per_page=1`,
+          `/ts/v1/transaction?page=${page}&per_page=5`,
         {
           headers: {
             authorization: localStorage.getItem("TOKEN"),

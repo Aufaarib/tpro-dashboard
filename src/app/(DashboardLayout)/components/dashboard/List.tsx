@@ -17,6 +17,7 @@ import {
 const List = () => {
   const { usersData } = useAppContext();
   const [merchantData, setMerchantData] = useState([]);
+  const [productData, setProductData] = useState([]);
   const [username, setUsername] = useState<any>("");
   const [role, setRole] = useState<any>("");
 
@@ -39,7 +40,26 @@ const List = () => {
       .catch((error) => {});
   };
 
+  const getProduct = (value?: any) => {
+    axios
+      .get(
+        process.env.NEXT_PUBLIC_BASE +
+          `/ps/v1/products?page=${value}&per_page=5`,
+        {
+          headers: {
+            authorization: localStorage.getItem("TOKEN"),
+          },
+        }
+      )
+      .then((res) => {
+        setProductData(res.data.body);
+        // setProductMeta(res.data.meta);
+      })
+      .catch((error) => {});
+  };
+
   useEffect(() => {
+    getProduct();
     getMerchant();
     setUsername(localStorage.getItem("USERNAME"));
     setRole(localStorage.getItem("ROLE"));
@@ -120,7 +140,7 @@ const List = () => {
               />
             </Box>
             <Box sx={{ display: "flex" }}>
-              <Button
+              {/* <Button
                 sx={{
                   width: "140px",
                   height: "48px",
@@ -130,7 +150,7 @@ const List = () => {
                 }}
               >
                 View Profile
-              </Button>
+              </Button> */}
             </Box>
           </Box>
           <Box
@@ -163,7 +183,7 @@ const List = () => {
               Total Merchant
             </Typography>
             <Typography sx={{ fontSize: "24px", fontWeight: 500 }}>
-              80
+              {merchantData.length}
             </Typography>
           </Box>
           <Box
@@ -196,7 +216,7 @@ const List = () => {
               Total Product
             </Typography>
             <Typography sx={{ fontSize: "24px", fontWeight: 500 }}>
-              80
+              {productData.length}
             </Typography>
           </Box>
         </Box>

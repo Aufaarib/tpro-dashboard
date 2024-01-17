@@ -22,7 +22,7 @@ const List = () => {
     axios
       .get(
         process.env.NEXT_PUBLIC_BASE +
-          `/ps/v1/products?page=${value}&per_page=1`,
+          `/ps/v1/products?page=${value}&per_page=5`,
         {
           headers: {
             authorization: localStorage.getItem("TOKEN"),
@@ -39,11 +39,6 @@ const List = () => {
   useEffect(() => {
     getProduct();
   }, []);
-
-  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
-    event.preventDefault();
-    console.info("You clicked a breadcrumb.");
-  }
 
   const breadcrumbs = [
     <Typography fontSize="13px" key="3" color="#999" fontWeight={400}>
