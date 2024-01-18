@@ -5,7 +5,7 @@ export default function middleware(req: any) {
   const url = req.url;
 
   if (verify !== "superadmin" && url.includes("dashboard")) {
-    // return NextResponse.redirect(new URL("/ui-components/auth", req.url));
+    return NextResponse.redirect(new URL("/ui-components/auth", req.url));
   }
 
   return NextResponse.next();
