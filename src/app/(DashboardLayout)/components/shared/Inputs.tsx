@@ -97,7 +97,9 @@ export const Dropdown = ({
         value={value}
       >
         {options?.map((data: any) => (
-          <MenuItem value={data.value}>{data.label}</MenuItem>
+          <MenuItem key={options.value} value={data.value}>
+            {data.label}
+          </MenuItem>
         ))}
       </Select>
     </Box>
